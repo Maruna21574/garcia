@@ -1321,6 +1321,18 @@ html.js .reveal.is-visible { opacity: 1; transform: translateY(0); }
     .lightbox__nav--next { right: 10px; }
 }
 
+/* Safari-safe mobile lightbox positioning. */
+@media (max-width: 767px) {
+    .lightbox { padding: 0; }
+    .lightbox__dialog { width: 100vw; height: 100vh; max-width: none; max-height: none; border: 0; border-radius: 0; overflow: hidden; }
+    .lightbox__media { width: 100%; height: 100vh; min-height: 0; }
+    .lightbox__dialog img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; }
+    .lightbox__close { position: fixed; top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); z-index: 20; display: grid; width: 42px; height: 42px; place-items: center; padding: 0; border: 1px solid rgba(255,255,255,.55); border-radius: 50%; color: var(--white); background: rgba(36,23,16,.9); cursor: pointer; font-family: Arial, sans-serif; font-size: 1.45rem; line-height: 1; -webkit-appearance: none; appearance: none; }
+    .lightbox__nav { position: fixed; top: 50%; bottom: auto; z-index: 20; width: 44px; height: 44px; padding: 0; transform: translateY(-50%); }
+    .lightbox__nav--prev { left: max(10px, env(safe-area-inset-left)); }
+    .lightbox__nav--next { right: max(10px, env(safe-area-inset-right)); }
+}
+
 /* Dark wood header state */
 .site-header.is-scrolled {
     color: rgba(255,255,255,.88);
