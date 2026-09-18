@@ -242,6 +242,10 @@ document.addEventListener('DOMContentLoaded', () => {
         lightboxPrevious?.addEventListener('click', () => moveLightbox(-1));
         lightboxNext?.addEventListener('click', () => moveLightbox(1));
         lightboxClose.forEach((button) => button.addEventListener('click', closeLightbox));
+        lightbox.addEventListener('click', (event) => {
+            const target = event.target instanceof Element ? event.target.closest('[data-lightbox-close]') : null;
+            if (target) closeLightbox();
+        });
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') closeLightbox();
             if (lightbox.classList.contains('is-open') && event.key === 'ArrowLeft') moveLightbox(-1);

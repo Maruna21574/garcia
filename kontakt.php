@@ -108,7 +108,7 @@ require __DIR__ . '/includes/header.php';
                 <label class="form-file" for="photo">Fotografia <small>nepovinné · JPG, PNG alebo WEBP do 8 MB</small><input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
                 <label class="form-check"><input type="checkbox" name="consent" required><span>Súhlasím so spracovaním údajov na účely odpovede na dopyt. <a href="ochrana-sukromia.php">Viac informácií</a>.</span></label>
                 <input type="text" name="website" tabindex="-1" autocomplete="off" class="form-honeypot" aria-hidden="true">
-                <button class="button button--dark button--full" type="submit">Odoslať dopyt <span aria-hidden="true">↗</span></button>
+                <button class="button button--dark button--full" type="submit">Odoslať dopyt</button>
             </form>
         </div>
     </div>

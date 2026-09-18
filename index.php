@@ -21,7 +21,7 @@ $whyItems = [
     ['symbol' => '✦', 'title' => 'Overené riešenia', 'desc' => 'Volíme vhodný systém podľa umiestnenia, počasia a namáhania povrchu.'],
     ['symbol' => '⌁', 'title' => 'Čistá remeselná práca', 'desc' => 'Dbáme na detaily, okolie aj výsledok, ktorý funguje prakticky.'],
     ['symbol' => 'G', 'title' => 'Lokálny prístup', 'desc' => 'Pôsobíme v Liptovskom Mikuláši a okolí. Vieme prísť, pozrieť sa a poradiť.'],
-    ['symbol' => '↗', 'title' => 'Férová komunikácia', 'desc' => 'Jasne vysvetlíme možnosti, postup aj ďalšiu údržbu bez zbytočných sľubov.'],
+    ['symbol' => '✓', 'title' => 'Férová komunikácia', 'desc' => 'Jasne vysvetlíme možnosti, postup aj ďalšiu údržbu bez zbytočných sľubov.'],
 ];
 
 $processSteps = [
@@ -88,7 +88,7 @@ $reviews = [
         <div class="slth-section-header slth-section-header--center"><p class="eyebrow">Čo pre vás obnovíme</p><h2>Naše služby</h2><p>Od prvého očistenia až po poslednú vrstvu ochrany — kompletná starostlivosť o drevo pre domy, chaty aj stavby.</p></div>
         <div class="slth-services-grid">
             <?php foreach ($services as $service): ?>
-            <article class="slth-service-card reveal"><div class="slth-service-card__icon"><?= service_icon($service['icon']) ?></div><h3><?= e($service['title']) ?></h3><p><?= e($service['desc']) ?></p><a href="sluzby.php#<?= e($service['anchor']) ?>" class="slth-service-card__link">Viac informácií <span>↗</span></a></article>
+            <article class="slth-service-card reveal"><div class="slth-service-card__icon"><?= service_icon($service['icon']) ?></div><h3><?= e($service['title']) ?></h3><p><?= e($service['desc']) ?></p><a href="sluzby.php#<?= e($service['anchor']) ?>" class="slth-service-card__link">Viac informácií</a></article>
             <?php endforeach; ?>
         </div>
     </div>
@@ -153,7 +153,7 @@ $reviews = [
     <div class="container">
         <div class="slth-section-header slth-section-header--center"><p class="eyebrow">Ako prebieha spolupráca</p><h2>Proces renovácie</h2><p>Jasný postup od prvého kontaktu až po drevo pripravené na ďalšie roky.</p></div>
         <div class="slth-process-grid"><?php foreach ($processSteps as $i => $step): ?><div class="slth-process-step reveal"><div class="slth-process-step__num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></div><h3><?= e($step['title']) ?></h3><p><?= e($step['desc']) ?></p></div><?php endforeach; ?></div>
-        <div class="slth-process__cta"><div><span>Ďalší krok</span><strong>Máte drevo, ktoré potrebuje nový začiatok?</strong></div><a href="kontakt.php" class="btn btn--gold">Nezáväzná konzultácia <span>↗</span></a></div>
+        <div class="slth-process__cta"><div><span>Ďalší krok</span><strong>Máte drevo, ktoré potrebuje nový začiatok?</strong></div><a href="kontakt.php" class="btn btn--gold">Nezáväzná konzultácia</a></div>
     </div>
 </section>
 

@@ -2903,16 +2903,8 @@ html.js .reveal.is-visible {
 }
 
 .btn:not(:has(.btn__arrow))::after {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  margin-left: 2px;
-  border-radius: 50%;
-  content: "↗";
-  font-size: 1.15rem;
-  line-height: 1;
-  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  display: none;
+  content: "";
 }
 
 .btn:hover .btn__arrow {
@@ -6393,10 +6385,10 @@ html.js .reveal.is-visible {
     object-fit: contain;
   }
   .lightbox__close {
-    position: absolute;
+    position: fixed;
     top: 16px;
     right: 16px;
-    z-index: 30;
+    z-index: 120;
     display: grid;
     width: 44px;
     height: 44px;
@@ -6412,6 +6404,7 @@ html.js .reveal.is-visible {
     line-height: 1;
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
     -webkit-appearance: none;
     appearance: none;
   }
@@ -6432,6 +6425,15 @@ html.js .reveal.is-visible {
     right: max(10px, env(safe-area-inset-right));
   }
 }
+.lightbox__close {
+  z-index: 120;
+  pointer-events: auto;
+}
+
+.mobile-nav__contact {
+  justify-content: center;
+}
+
 /* Dark wood header state */
 .site-header.is-scrolled {
   color: rgba(255, 255, 255, 0.88);

@@ -97,7 +97,7 @@ $businessSchema = [
                     <li><a href="<?= e($item['href']) ?>"<?= is_active($key, $activePage) ?>><?= e($item['label']) ?></a></li>
                     <?php endforeach; ?>
                 </ul>
-                <a class="mobile-nav__contact" href="kontakt.php">Kontakt <span aria-hidden="true">↗</span></a>
+                <a class="mobile-nav__contact" href="kontakt.php">Kontakt</a>
             </nav>
             <div class="header__actions">
                 <a href="kontakt.php" class="btn btn--gold header__cta">Nezáväzná konzultácia</a>

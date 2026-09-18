@@ -82,7 +82,7 @@ $details = [
                     <div class="slth-service-card__icon"><?= service_icon($service['icon']) ?></div>
                     <h3><?= e($service['title']) ?></h3>
                     <p><?= e($service['desc']) ?></p>
-                    <a href="#<?= e($service['anchor']) ?>" class="slth-service-card__link">Preskúmať službu <span>↗</span></a>
+                    <a href="#<?= e($service['anchor']) ?>" class="slth-service-card__link">Preskúmať službu</a>
                 </article>
             <?php endforeach; ?>
         </div>

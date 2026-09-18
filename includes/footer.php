@@ -73,7 +73,7 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.9 3.2a8.7 8.7 0 1 0 5.9 5.9 2.6 2.6 0 0 1-3.2-3.2 8.7 8.7 0 0 0-2.7-2.7ZM8.3 13.5a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6Zm3.8 3.3a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Zm.7-6.6a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Z"/></svg>
     </button>
 
-    <a class="floating-contact" data-floating-contact href="kontakt.php"><span>G</span><strong>Nezáväzná konzultácia</strong><i aria-hidden="true">↗</i></a>
+    <a class="floating-contact" data-floating-contact href="kontakt.php"><span>G</span><strong>Nezáväzná konzultácia</strong></a>
 
     <button class="scroll-top" type="button" data-scroll-top aria-label="Späť na začiatok stránky" hidden>
         <span aria-hidden="true">↑</span>
