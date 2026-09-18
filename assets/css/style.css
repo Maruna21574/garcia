@@ -6378,7 +6378,7 @@ html.js .reveal.is-visible {
     max-height: none;
     border: 0;
     border-radius: 0;
-    overflow: hidden;
+    overflow: visible;
   }
   .lightbox__media {
     width: 100%;
@@ -6393,23 +6393,25 @@ html.js .reveal.is-visible {
     object-fit: contain;
   }
   .lightbox__close {
-    position: fixed;
-    top: max(12px, env(safe-area-inset-top));
-    right: max(12px, env(safe-area-inset-right));
-    z-index: 20;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 30;
     display: grid;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     place-items: center;
     padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 50%;
     color: var(--white);
-    background: rgba(36, 23, 16, 0.9);
+    background: #241710;
     cursor: pointer;
     font-family: Arial, sans-serif;
-    font-size: 1.45rem;
+    font-size: 1.55rem;
     line-height: 1;
+    opacity: 1;
+    visibility: visible;
     -webkit-appearance: none;
     appearance: none;
   }

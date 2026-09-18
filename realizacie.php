@@ -56,8 +56,8 @@ require __DIR__ . '/includes/header.php';
 <div class="lightbox" data-lightbox-modal aria-hidden="true">
     <div class="lightbox__backdrop" data-lightbox-close></div>
     <div class="lightbox__dialog" role="dialog" aria-modal="true" aria-label="Detail realizácie">
+        <button type="button" class="lightbox__close" data-lightbox-close aria-label="Zavrieť detail">×</button>
         <div class="lightbox__media">
-            <button type="button" class="lightbox__close" data-lightbox-close aria-label="Zavrieť detail">×</button>
             <button type="button" class="lightbox__nav lightbox__nav--prev" data-lightbox-prev aria-label="Predchádzajúca fotografia"><span aria-hidden="true">←</span></button>
             <img data-lightbox-image src="" alt="">
             <button type="button" class="lightbox__nav lightbox__nav--next" data-lightbox-next aria-label="Nasledujúca fotografia"><span aria-hidden="true">→</span></button>
