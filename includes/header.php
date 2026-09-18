@@ -7,7 +7,7 @@ $activePage = $activePage ?? '';
 $bodyClass = $bodyClass ?? '';
 $metaDescription = $metaDescription ?? 'GARCIA renovuje, brúsi a chráni drevené chaty, stavby, okná a dvere v Liptovskom Mikuláši a okolí.';
 $seoKeywords = $seoKeywords ?? 'renovácia dreva, brúsenie dreva, ošetrenie dreva, ochrana dreva, renovácia chát, drevené stavby, Liptovský Mikuláš';
-$socialImage = $socialImage ?? SITE_URL . '/assets/images/realizacie/chaty/zrub-front-detail.jpg';
+$socialImage = $socialImage ?? SITE_URL . '/assets/images/brand/og-garcia-chata.png';
 $currentScript = basename((string) ($_SERVER['SCRIPT_NAME'] ?? 'index.php'));
 $canonicalUrl = rtrim(SITE_URL, '/') . ($currentScript === 'index.php' ? '/' : '/' . $currentScript);
 $schemaPhone = preg_replace('/\D+/', '', CONTACT_PHONE);
@@ -41,10 +41,15 @@ $businessSchema = [
     <meta property="og:description" content="<?= e($metaDescription) ?>">
     <meta property="og:url" content="<?= e($canonicalUrl) ?>">
     <meta property="og:image" content="<?= e($socialImage) ?>">
+    <meta property="og:image:width" content="1733">
+    <meta property="og:image:height" content="908">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="GARCIA — povrchová úprava a renovácia dreva">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?= e($pageTitle) ?>">
     <meta name="twitter:description" content="<?= e($metaDescription) ?>">
     <meta name="twitter:image" content="<?= e($socialImage) ?>">
+    <meta name="twitter:image:alt" content="GARCIA — povrchová úprava a renovácia dreva">
     <script type="application/ld+json"><?= json_encode($businessSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
     <meta name="theme-color" content="#1f211c">
     <link rel="icon" type="image/svg+xml" href="assets/images/brand/favicon.svg">
