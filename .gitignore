@@ -1,0 +1,19 @@
+# Local development and editor files
+.idea/
+.vscode/
+*.log
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local dependency and cache directories
+vendor/
+node_modules/
+sass-cache/
+
+# Environment files and private local overrides
+.env
+.env.*
+!.env.example
+
