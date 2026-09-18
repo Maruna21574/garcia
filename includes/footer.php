@@ -1,26 +1,27 @@
+<?php require_once __DIR__ . '/cms.php'; $cmsContent = cms_data(); $cmsSite = $cmsContent['site']; $cmsFooter = $cmsContent['footer']; ?>
     </main>
     <footer class="site-footer">
         <div class="container footer__grid">
             <div class="footer__brand">
-                <a href="index.php" class="logo logo--footer"><img src="assets/images/brand/logo-garcia.png" alt="GARCIA — povrchová úprava a renovácia dreva" class="logo__img"></a>
-                <p>Dávame drevu nový život. Renovácie, brúsenie a ochrana drevených stavieb s rešpektom k materiálu.</p>
-                <address><?= e(SITE_LOCATION) ?></address>
-                <a class="footer-social" href="<?= e(FACEBOOK_URL) ?>" target="_blank" rel="noopener noreferrer" aria-label="GARCIA na Facebooku"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.4c-.5-.1-1.7-.2-3.2-.2-3.2 0-5.4 2-5.4 5.5V13H5v4h3.4v7h4.2v-7h3.5l.6-4h-4.1V10c0-1.2.3-2 1.4-2Z"/></svg><span>Facebook</span></a>
+                <a href="index.php" class="logo logo--footer"><img src="<?= e($cmsSite['logo']) ?>" alt="<?= e($cmsSite['name'] . ' — ' . $cmsSite['tagline']) ?>" class="logo__img"></a>
+                <p><?= e($cmsSite['name']) ?> — <?= e($cmsSite['tagline']) ?>. <?= e($cmsFooter['description']) ?></p>
+                <address><?= e($cmsSite['location']) ?></address>
+                <a class="footer-social" href="<?= e($cmsSite['facebook']) ?>" target="_blank" rel="noopener noreferrer" aria-label="GARCIA na Facebooku"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.4c-.5-.1-1.7-.2-3.2-.2-3.2 0-5.4 2-5.4 5.5V13H5v4h3.4v7h4.2v-7h3.5l.6-4h-4.1V10c0-1.2.3-2 1.4-2Z"/></svg><span>Facebook</span></a>
             </div>
             <div class="footer__col">
-                <h3>Rýchle odkazy</h3>
+                <h3><?= e($cmsFooter['quick_links_title']) ?></h3>
                 <ul><li><a href="index.php">Domov</a></li><li><a href="sluzby.php">Služby</a></li><li><a href="realizacie.php">Realizácie</a></li><li><a href="o-nas.php">O nás</a></li><li><a href="kontakt.php">Kontakt</a></li></ul>
             </div>
             <div class="footer__col">
-                <h3>Služby</h3>
+                <h3><?= e($cmsFooter['services_title']) ?></h3>
                 <ul><li><a href="sluzby.php#chaty">Chaty a drevené stavby</a></li><li><a href="sluzby.php#brusenie">Brúsenie a príprava</a></li><li><a href="sluzby.php#ochrana">Okná a dvere</a></li><li><a href="sluzby.php#ochrana">Ošetrenie a ochrana</a></li></ul>
             </div>
             <div class="footer__col footer__contact">
-                <h3>Kontakt</h3>
-                <ul><li><a href="kontakt.php">Nezáväzná konzultácia</a></li><?php if (contact_phone_available()): ?><li><a href="tel:<?= e(preg_replace('/\s+/', '', CONTACT_PHONE)) ?>"><?= e(CONTACT_PHONE) ?></a></li><?php endif; ?><?php if (contact_email_available()): ?><li><a href="mailto:<?= e(CONTACT_EMAIL) ?>"><?= e(CONTACT_EMAIL) ?></a></li><?php endif; ?><li><?= e(SITE_LOCATION) ?></li></ul>
+                <h3><?= e($cmsFooter['contact_title']) ?></h3>
+                <ul><li><a href="kontakt.php">Nezáväzná konzultácia</a></li><li><a href="tel:<?= e(preg_replace('/\s+/', '', $cmsSite['phone'])) ?>"><?= e($cmsSite['phone']) ?></a></li><li><a href="mailto:<?= e($cmsSite['email']) ?>"><?= e($cmsSite['email']) ?></a></li><li><?= e($cmsSite['location']) ?></li></ul>
             </div>
         </div>
-        <div class="footer__bottom"><div class="container footer__bottom-inner"><p>&copy; <?= date('Y') ?> GARCIA. Všetky práva vyhradené.</p><p><a href="ochrana-sukromia.php">Ochrana súkromia</a> · <button class="footer-cookie-link" type="button" data-cookie-open>Nastavenia cookies</button> · <?= e(SITE_TAGLINE) ?></p></div></div>
+        <div class="footer__bottom"><div class="container footer__bottom-inner"><p>&copy; <?= date('Y') ?> <?= e($cmsSite['name']) ?>. Všetky práva vyhradené.</p><p><a href="ochrana-sukromia.php"><?= e($cmsFooter['privacy_label']) ?></a> · <button class="footer-cookie-link" type="button" data-cookie-open><?= e($cmsFooter['cookies_label']) ?></button> · <?= e($cmsSite['tagline']) ?></p></div></div>
     </footer>
 
     <section class="cookie-banner" data-cookie-banner hidden aria-label="Nastavenia cookies">

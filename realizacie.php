@@ -1,9 +1,13 @@
 <?php
 
-$pageTitle = 'Realizácie — GARCIA';
+require_once __DIR__ . '/includes/cms.php';
+$content = cms_data();
+$galleryPage = $content['gallery_page'];
+$pageTitle = $content['seo']['gallery']['title'];
 $activePage = 'realizacie';
 $bodyClass = 'inner-page gallery-page';
-$metaDescription = 'Pozrite si realizácie GARCIA: renovácie chát, drevených fasád, terás, zábradlí, okien a dverí.';
+$metaDescription = $content['seo']['gallery']['description'];
+$seoKeywords = $content['seo']['gallery']['keywords'];
 $gallery = [
     ['file' => 'realizacie/Chata/814754130_4710092289220022_5544860182670447562_n.jpg', 'title' => 'Zrubová chata — celkový pohľad', 'label' => 'dokončená obnova', 'category' => 'chaty'],
     ['file' => 'realizacie/Chata/793899922_26329356466761965_5538160186085151006_n.jpg', 'title' => 'Zrubová chata — detail', 'label' => 'obnovená fasáda', 'category' => 'chaty'],
@@ -24,23 +28,24 @@ $gallery = [
     ['file' => 'realizacie/chaty/obklad-cela-stavba.jpg', 'title' => 'Fasáda celej stavby', 'label' => 'drevená stavba', 'category' => 'chaty'],
     ['file' => 'proces/zabradlie-polovica.jpg', 'title' => 'Zábradlie — pred a po', 'label' => 'viditeľná zmena', 'category' => 'proces'],
 ];
+$gallery = $galleryPage['items'];
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="slth-page-hero slth-page-hero--video" style="--page-image: url('assets/images/realizacie/chaty/terasa-detail-final.jpg');">
-    <video class="slth-page-hero__video" autoplay muted loop playsinline preload="metadata" poster="assets/images/realizacie/chaty/terasa-detail-final.jpg" aria-hidden="true">
-        <source src="assets/media/proces-renovacie.mp4" type="video/mp4">
+<section class="slth-page-hero slth-page-hero--video" style="--page-image: url('<?= e($galleryPage['hero']['image']) ?>');">
+    <video class="slth-page-hero__video" autoplay muted loop playsinline preload="metadata" poster="<?= e($galleryPage['hero']['image']) ?>" aria-hidden="true">
+        <source src="<?= e($galleryPage['hero']['video']) ?>" type="video/mp4">
     </video>
     <div class="container slth-page-hero__inner">
-        <h1>Výsledok, ktorý <em>vidno aj cítiť.</em></h1>
-        <p>Výber z obnovy drevených chát, stavieb, terás, okien a detailov v našich rukách.</p>
+        <h1><?= $galleryPage['hero']['title'] ?></h1>
+        <p><?= e($galleryPage['hero']['description']) ?></p>
         <div class="slth-breadcrumb"><a href="index.php">GARCIA</a><span>/</span><a href="realizacie.php" aria-current="page">realizácie</a></div>
     </div>
 </section>
 
 <section class="slth-gallery-section">
     <div class="container">
-        <div class="slth-gallery-heading"><div class="slth-section-header"><p class="eyebrow">Galéria GARCIA</p><h2>Drevo po našom.</h2><p>Každá realizácia je trochu iná. Spája ich príprava, detail a rešpekt k pôvodnému materiálu.</p></div><div class="gallery-toolbar" role="group" aria-label="Filtrovať realizácie"><button class="filter-button is-active" type="button" data-filter="all">Všetko</button><button class="filter-button" type="button" data-filter="chaty">Chaty a stavby</button><button class="filter-button" type="button" data-filter="okna">Okná a dvere</button><button class="filter-button" type="button" data-filter="proces">V procese</button></div></div>
+        <div class="slth-gallery-heading"><div class="slth-section-header"><p class="eyebrow"><?= e($galleryPage['intro']['eyebrow']) ?></p><h2><?= $galleryPage['intro']['title'] ?></h2><p><?= e($galleryPage['intro']['description']) ?></p></div><div class="gallery-toolbar" role="group" aria-label="Filtrovať realizácie"><?php foreach ($galleryPage['filters'] as $filterIndex => $filter): $filterKeys = ['all', 'chaty', 'okna', 'proces']; $filterKey = $filterKeys[$filterIndex] ?? 'all'; ?><button class="filter-button<?= $filterIndex === 0 ? ' is-active' : '' ?>" type="button" data-filter="<?= e($filterKey) ?>"><?= e($filter) ?></button><?php endforeach; ?></div></div>
         <div class="slth-gallery-full-grid">
             <?php foreach ($gallery as $item): $src = 'assets/images/' . $item['file']; ?>
                 <a href="<?= e($src) ?>" class="slth-gallery-card reveal" data-gallery-item data-category="<?= e($item['category']) ?>" data-lightbox data-title="<?= e($item['title']) ?>" data-label="<?= e($item['label']) ?>">

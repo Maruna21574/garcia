@@ -17,3 +17,9 @@ sass-cache/
 .env.*
 !.env.example
 
+# CMS data and client uploads (kept on the hosting server)
+/storage/*.json
+!/storage/.gitkeep
+/storage/sessions/
+/assets/uploads/*
+!/assets/uploads/.gitkeep

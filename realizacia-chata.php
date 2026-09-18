@@ -1,39 +1,42 @@
 <?php
 
-$pageTitle = 'Realizácia drevenej chaty — GARCIA';
+require_once __DIR__ . '/includes/cms.php';
+$content = cms_data();
+$projectPage = $content['project_page'];
+$pageTitle = $content['seo']['project']['title'];
 $activePage = 'realizacie';
 $bodyClass = 'inner-page project-page';
-$metaDescription = 'Príbeh realizácie GARCIA: obnova terasy, zábradlia a drevených prvkov na chate v Liptove.';
+$metaDescription = $content['seo']['project']['description'];
+$seoKeywords = $content['seo']['project']['keywords'];
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="slth-page-hero" style="--page-image: url('assets/images/realizacie/chaty/terasa-zabradlie-final.jpg');">
+<section class="slth-page-hero" style="--page-image: url('<?= e($projectPage['hero']['image']) ?>');">
     <div class="container slth-page-hero__inner">
         <p class="eyebrow">GARCIA / detail realizácie</p>
-        <h1>Keď sa starostlivosť <em>oplatí.</em></h1>
-        <p>Obnova terasy, zábradlia a drevených prvkov na chate v Liptove — s cieľom zachovať charakter a vrátiť povrchu život.</p>
+        <h1><?= $projectPage['hero']['title'] ?></h1>
+        <p><?= e($projectPage['hero']['description']) ?></p>
         <div class="slth-breadcrumb"><a href="realizacie.php">Realizácie</a><span>/</span><span>Drevená chata</span></div>
     </div>
 </section>
 
 <section class="slth-about-section">
     <div class="container slth-about-grid">
-        <div class="slth-about-media reveal"><img src="assets/images/realizacie/chaty/terasa-zabradlie-final.jpg" alt="Zrenovované zábradlie na terase" loading="lazy"></div>
+        <div class="slth-about-media reveal"><img src="<?= e($projectPage['about']['image']) ?>" alt="Zrenovované zábradlie na terase" loading="lazy"></div>
         <div class="slth-about-copy reveal">
-            <p class="eyebrow">O projekte</p>
-            <h2>Nie všetko staré treba <em>vymeniť.</em></h2>
-            <p>Na drevenej chate sme obnovovali prvky, ktoré boli vystavené slnku, dažďu a rokmi stratili svoju ochrannú vrstvu. Cieľom nebolo prekryť ich charakter, ale vrátiť mu sýtosť a pokoj.</p>
-            <p>Prešli sme jednotlivé časti stavby, pripravili povrch a zvolili ošetrenie podľa jeho namáhania.</p>
-            <div class="slth-about-facts"><div><strong>Rozsah</strong><span>Terasa a zábradlie</span></div><div><strong>Postup</strong><span>Brúsenie + ošetrenie</span></div><div><strong>Lokalita</strong><span>Liptov a okolie</span></div></div>
+            <p class="eyebrow"><?= e($projectPage['about']['eyebrow']) ?></p>
+            <h2><?= $projectPage['about']['title'] ?></h2>
+            <?php foreach ($projectPage['about']['paragraphs'] as $paragraph): ?><p><?= e($paragraph) ?></p><?php endforeach; ?>
+            <div class="slth-about-facts"><?php foreach ($projectPage['about']['facts'] as $fact): ?><div><strong><?= e($fact['label']) ?></strong><span><?= e($fact['value']) ?></span></div><?php endforeach; ?></div>
         </div>
     </div>
 </section>
 
 <section class="slth-gallery-section">
-    <div class="container"><div class="slth-section-header slth-section-header--center"><p class="eyebrow">Z priebehu práce</p><h2>Detail, ktorý rozhoduje.</h2><p>Príprava povrchu je rovnako dôležitá ako finálna vrstva. Práve v detailoch vzniká rozdiel, ktorý vydrží.</p></div><div class="slth-gallery-grid"><a class="slth-gallery-item reveal" href="realizacie.php"><img src="assets/images/realizacie/chaty/terasa-detail-final.jpg" alt="Detail drevenej terasy po renovácii" loading="lazy"><span>Detail terasy</span></a><a class="slth-gallery-item reveal" href="realizacie.php"><img src="assets/images/realizacie/chaty/vstupna-terasa-final.jpg" alt="Vstupná terasa po ošetrení" loading="lazy"><span>Vstupná terasa</span></a><a class="slth-gallery-item reveal" href="realizacie.php"><img src="assets/images/realizacie/chaty/terasa-praca-svetlo.jpg" alt="Renovácia terasy počas práce" loading="lazy"><span>Práca na mieste</span></a><a class="slth-gallery-item reveal" href="realizacie.php"><img src="assets/images/realizacie/chaty/zabradlie-detail-final.jpg" alt="Detail zábradlia po renovácii" loading="lazy"><span>Obnovená kresba</span></a></div></div>
+    <div class="container"><div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($projectPage['gallery']['eyebrow']) ?></p><h2><?= $projectPage['gallery']['title'] ?></h2><p><?= e($projectPage['gallery']['description']) ?></p></div><div class="slth-gallery-grid"><?php foreach ($projectPage['gallery']['items'] as $item): ?><a class="slth-gallery-item reveal" href="realizacie.php"><img src="<?= e($item['src']) ?>" alt="<?= e($item['alt']) ?>" loading="lazy"><span><?= e($item['label']) ?></span></a><?php endforeach; ?></div></div>
 </section>
 
-<section class="slth-process"><div class="container"><div class="slth-section-header slth-section-header--center"><p class="eyebrow">Náš postup</p><h2>Najskôr sme nechali drevo <em>porozprávať.</em></h2><p>Obhliadka, brúsenie, čistenie a vhodné ošetrenie. Výsledok je živý, nie umelý — presne ako drevo má byť.</p></div><div class="slth-process-grid"><div class="slth-process-step reveal"><div class="slth-process-step__num">01</div><h3>Posúdenie stavu</h3><p>Prešli sme jednotlivé časti stavby a očakávania majiteľa.</p></div><div class="slth-process-step reveal"><div class="slth-process-step__num">02</div><h3>Brúsenie a čistenie</h3><p>Odstránili sme zvetrané a nerovnomerne stmavnuté vrstvy.</p></div><div class="slth-process-step reveal"><div class="slth-process-step__num">03</div><h3>Nová ochrana</h3><p>Povrchy dostali rovnomernú úpravu pre ďalšie sezóny.</p></div><div class="slth-process-step reveal"><div class="slth-process-step__num">04</div><h3>Čistý výsledok</h3><p>Kresba dreva zostala viditeľná a stavba opäť pôsobí pokojne.</p></div></div></div></section>
+<section class="slth-process"><div class="container"><div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($projectPage['process']['eyebrow']) ?></p><h2><?= $projectPage['process']['title'] ?></h2><p><?= e($projectPage['process']['description']) ?></p></div><div class="slth-process-grid"><?php foreach ($projectPage['process']['steps'] as $index => $step): ?><div class="slth-process-step reveal"><div class="slth-process-step__num"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></div><h3><?= e($step['title']) ?></h3><p><?= e($step['desc']) ?></p></div><?php endforeach; ?></div></div></section>
 
 <?php require __DIR__ . '/includes/contact-prompt.php'; ?>
 

@@ -11,6 +11,8 @@ Kompletný jednoduchý PHP web pripravený na Websupport. Nepotrebuje databázu 
 - `o-nas.php` — príbeh a hodnoty značky
 - `kontakt.php` — kontaktný formulár odosielaný cez PHP `mail()`
 - `ochrana-sukromia.php` — základné informácie o súkromí
+- `admin/` — chránená administrácia obsahu a médií
+- `includes/cms.php` — predvolený obsah webu a JSON úložisko klientskych zmien
 - `assets/images/` — premenované a roztriedené fotografie
 - `assets/scss/style.scss` — zdroj štýlov
 - `assets/css/style.css` — štýly používané webom
@@ -26,6 +28,12 @@ Kompletný jednoduchý PHP web pripravený na Websupport. Nepotrebuje databázu 
 5. Otestujte kontaktný formulár priamo na doméne.
 
 Ak server nepovoľuje `mail()`, nastavte na Websupporte odosielanie podľa ich aktuálnej konfigurácie alebo formulár napojte na SMTP službu.
+
+## Administrácia
+
+Po nahratí webu otvorte `https://vasa-domena.sk/admin/`. Pri prvom otvorení si klient vytvorí heslo administrátora. Následne môže upravovať texty, SEO, kontakty, navigáciu, služby, realizácie, referencie, proces, právne texty a cesty ku všetkým obrázkom. Nové fotografie sa nahrávajú cez knižnicu médií do `assets/uploads/`.
+
+Obsah sa ukladá do `storage/content.json`, heslo do `storage/admin.json` a nahrané médiá do `assets/uploads/`. Tieto súbory sú zámerne v `.gitignore`, aby ich ďalší deploy cez `git pull` neprepísal.
 
 ## Fotografie
 

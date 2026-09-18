@@ -1,9 +1,13 @@
 <?php
 
-$pageTitle = 'Služby — GARCIA';
+require_once __DIR__ . '/includes/cms.php';
+$content = cms_data();
+$servicesPage = $content['services_page'];
+$pageTitle = $content['seo']['services']['title'];
 $activePage = 'sluzby';
 $bodyClass = 'inner-page services-page';
-$metaDescription = 'Renovácie drevených chát a stavieb, brúsenie, príprava povrchu, ošetrenie okien a ochrana dreva.';
+$metaDescription = $content['seo']['services']['description'];
+$seoKeywords = $content['seo']['services']['keywords'];
 require __DIR__ . '/includes/header.php';
 
 $services = [
@@ -56,15 +60,17 @@ $details = [
         ],
     ],
 ];
+$services = $servicesPage['services'];
+$details = $servicesPage['details'];
 ?>
 
-<section class="slth-page-hero slth-page-hero--video" style="--page-image: url('assets/images/realizacie/chaty/obklad-cela-stavba.jpg');">
-    <video class="slth-page-hero__video" autoplay muted loop playsinline preload="metadata" poster="assets/images/realizacie/chaty/obklad-cela-stavba.jpg" aria-hidden="true">
-        <source src="assets/media/proces-renovacie.mp4" type="video/mp4">
+<section class="slth-page-hero slth-page-hero--video" style="--page-image: url('<?= e($servicesPage['hero']['image']) ?>');">
+    <video class="slth-page-hero__video" autoplay muted loop playsinline preload="metadata" poster="<?= e($servicesPage['hero']['image']) ?>" aria-hidden="true">
+        <source src="<?= e($servicesPage['hero']['video']) ?>" type="video/mp4">
     </video>
     <div class="container slth-page-hero__inner">
-        <h1>Starostlivosť, ktorú drevo <em>cíti.</em></h1>
-        <p>Od prvej obhliadky po poslednú vrstvu ochrany. Každý krok prispôsobujeme konkrétnemu drevu a jeho príbehu.</p>
+        <h1><?= $servicesPage['hero']['title'] ?></h1>
+        <p><?= e($servicesPage['hero']['description']) ?></p>
         <div class="slth-breadcrumb"><a href="index.php">GARCIA</a><span>/</span><a href="sluzby.php" aria-current="page">služby</a></div>
     </div>
 </section>
@@ -72,9 +78,9 @@ $details = [
 <section class="slth-services-section">
     <div class="container">
         <div class="slth-section-header slth-section-header--center">
-            <p class="eyebrow">Čo pre vás urobíme</p>
-            <h2>Renovácia dreva <em>na mieru.</em></h2>
-            <p>Vyberieme vhodný postup podľa typu dreva, jeho stavu, umiestnenia a vašej predstavy o výsledku.</p>
+            <p class="eyebrow"><?= e($servicesPage['intro']['eyebrow']) ?></p>
+            <h2><?= $servicesPage['intro']['title'] ?></h2>
+            <p><?= e($servicesPage['intro']['description']) ?></p>
         </div>
         <div class="slth-services-grid">
             <?php foreach ($services as $service): ?>
@@ -126,13 +132,13 @@ $details = [
 <section class="slth-process">
     <div class="container">
         <div class="slth-section-header slth-section-header--center">
-            <p class="eyebrow">Jednoduchá spolupráca</p>
-            <h2>Od nápadu po <em>výsledok.</em></h2>
-            <p>Jasný postup bez zbytočných prekvapení a s odporúčaním, ako sa o drevo starať aj neskôr.</p>
+            <p class="eyebrow"><?= e($servicesPage['process']['eyebrow']) ?></p>
+            <h2><?= $servicesPage['process']['title'] ?></h2>
+            <p><?= e($servicesPage['process']['description']) ?></p>
         </div>
         <div class="slth-process-grid">
-            <?php foreach (['Obhliadka a konzultácia', 'Príprava povrchu', 'Ošetrenie a ochrana', 'Odovzdanie a odporúčania'] as $index => $step): ?>
-                <div class="slth-process-step reveal"><div class="slth-process-step__num"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></div><h3><?= e($step) ?></h3><p><?= e(['Pozrieme sa na stav dreva a dohodneme si cieľ.', 'Očistíme, odstránime staré vrstvy a vybrúsime povrch.', 'Aplikujeme vhodný systém podľa umiestnenia a namáhania.', 'Odovzdáme čistý výsledok a odporúčania k ďalšej údržbe.'][$index]) ?></p></div>
+            <?php foreach ($servicesPage['process']['steps'] as $index => $step): ?>
+                <div class="slth-process-step reveal"><div class="slth-process-step__num"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></div><h3><?= e($step['title']) ?></h3><p><?= e($step['desc']) ?></p></div>
             <?php endforeach; ?>
         </div>
     </div>

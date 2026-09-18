@@ -1,9 +1,13 @@
 <?php
 
-$pageTitle = 'GARCIA — renovácie dreva v Liptovskom Mikuláši';
+require_once __DIR__ . '/includes/cms.php';
+$content = cms_data();
+$home = $content['home'];
+$pageTitle = $content['seo']['home']['title'];
 $activePage = 'domov';
 $bodyClass = 'slth-layout home-page';
-$metaDescription = 'GARCIA renovuje, brúsi a chráni drevené chaty, stavby, okná a dvere v Liptovskom Mikuláši a okolí.';
+$metaDescription = $content['seo']['home']['description'];
+$seoKeywords = $content['seo']['home']['keywords'];
 require __DIR__ . '/includes/header.php';
 
 $services = [
@@ -56,21 +60,29 @@ $reviews = [
     ['quote' => 'Oceňujeme čistú prácu, komunikáciu a to, že sme presne vedeli, čo sa bude diať. Drevený obklad dostal úplne nový život.', 'name' => 'Peter M.', 'place' => 'Demänovská Dolina · obnova obkladu'],
     ['quote' => 'Najviac nám pomohlo odporúčanie správneho postupu a následnej údržby. Terasa vyzerá výborne a vieme, ako sa o ňu ďalej starať.', 'name' => 'Lucia R.', 'place' => 'Liptovský Hrádok · terasa'],
 ];
+$services = $home['services'];
+$whyItems = $home['why_items'];
+$processSteps = $home['process_steps'];
+$tickerItems = $home['ticker'];
+$whySlides = $home['why_slides'];
+$beforeAfter = $home['before_after'];
+$trustPoints = $home['trust_points'];
+$reviews = $home['reviews'];
 ?>
 
-<section class="slth-hero" style="--hero-image: url('assets/images/realizacie/chaty/zrub-front-detail.jpg');">
-    <video class="slth-hero__video" autoplay muted loop playsinline preload="metadata" poster="assets/images/realizacie/chaty/zrub-front-detail.jpg" aria-hidden="true">
-        <source src="assets/media/proces-renovacie.mp4" type="video/mp4">
+<section class="slth-hero" style="--hero-image: url('<?= e($home['hero']['image']) ?>');">
+    <video class="slth-hero__video" autoplay muted loop playsinline preload="metadata" poster="<?= e($home['hero']['image']) ?>" aria-hidden="true">
+        <source src="<?= e($home['hero']['video']) ?>" type="video/mp4">
     </video>
     <div class="slth-hero__overlay"></div>
     <div class="container slth-hero__inner">
         <div class="slth-hero__center">
-            <h1>Vrátime drevu <em>jeho charakter.</em></h1>
-            <p class="slth-hero__subtitle">Renovujeme drevené chaty, stavby, terasy, okná a dvere s dôrazom na prirodzenú krásu, detail a dlhú životnosť.</p>
-            <div class="slth-hero__actions"><a href="kontakt.php" class="btn btn--gold btn--lg">Vyžiadať cenovú ponuku</a><a href="realizacie.php" class="btn btn--outline btn--lg">Pozrieť realizácie</a></div>
+            <h1><?= $home['hero']['title'] ?></h1>
+            <p class="slth-hero__subtitle"><?= e($home['hero']['subtitle']) ?></p>
+            <div class="slth-hero__actions"><a href="<?= e($home['hero']['primary_url']) ?>" class="btn btn--gold btn--lg"><?= e($home['hero']['primary_label']) ?></a><a href="<?= e($home['hero']['secondary_url']) ?>" class="btn btn--outline btn--lg"><?= e($home['hero']['secondary_label']) ?></a></div>
         </div>
     </div>
-    <div class="slth-hero__scroll">Objavte GARCIA</div>
+    <div class="slth-hero__scroll"><?= e($home['hero']['scroll_label']) ?></div>
 </section>
 
 <div class="craft-ticker" aria-label="Služby GARCIA">
@@ -85,7 +97,7 @@ $reviews = [
 
 <section class="slth-services-section" id="sluzby">
     <div class="container">
-        <div class="slth-section-header slth-section-header--center"><p class="eyebrow">Čo pre vás obnovíme</p><h2>Naše služby</h2><p>Od prvého očistenia až po poslednú vrstvu ochrany — kompletná starostlivosť o drevo pre domy, chaty aj stavby.</p></div>
+        <div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($home['services_intro']['eyebrow']) ?></p><h2><?= $home['services_intro']['title'] ?></h2><p><?= e($home['services_intro']['description']) ?></p></div>
         <div class="slth-services-grid">
             <?php foreach ($services as $service): ?>
             <article class="slth-service-card reveal"><div class="slth-service-card__icon"><?= service_icon($service['icon']) ?></div><h3><?= e($service['title']) ?></h3><p><?= e($service['desc']) ?></p><a href="sluzby.php#<?= e($service['anchor']) ?>" class="slth-service-card__link">Viac informácií</a></article>
@@ -97,8 +109,8 @@ $reviews = [
 <section class="before-after-section">
     <div class="container">
         <div class="before-after-intro">
-            <div class="slth-section-header"><p class="eyebrow">Predtým / potom</p><h2>Rozdiel, ktorý <em>vidno.</em></h2><p>Výber fotografií z obnovy drevených povrchov. Každý projekt má vlastný stav, materiál aj postup.</p></div>
-            <a href="realizacie.php" class="btn btn--outline-dark">Pozrieť všetky realizácie</a>
+            <div class="slth-section-header"><p class="eyebrow"><?= e($home['before_after_intro']['eyebrow']) ?></p><h2><?= $home['before_after_intro']['title'] ?></h2><p><?= e($home['before_after_intro']['description']) ?></p></div>
+            <a href="realizacie.php" class="btn btn--outline-dark"><?= e($home['before_after_intro']['button']) ?></a>
         </div>
         <div class="before-after-grid">
             <?php foreach ($beforeAfter as $item): ?>
@@ -121,11 +133,11 @@ $reviews = [
     </div>
 </section>
 
-<section class="slth-why-section"><div class="container slth-why-grid"><div class="slth-why-media slth-why-slider reveal" data-slider><div class="slth-slider-track"><?php foreach ($whySlides as $index => $slide): ?><figure class="slth-slider-slide<?= $index === 0 ? ' is-active' : '' ?>" data-slide><img src="<?= e($slide['src']) ?>" alt="<?= e($slide['alt']) ?>" loading="<?= $index === 0 ? 'eager' : 'lazy' ?>"><figcaption><?= e($slide['label']) ?></figcaption></figure><?php endforeach; ?></div><div class="slth-why-badge"><strong>G</strong><span>drevo s príbehom</span></div><div class="slth-slider-controls"><button type="button" class="slth-slider-arrow" data-slider-prev aria-label="Predchádzajúca fotografia">←</button><div class="slth-slider-counter"><strong data-slider-current>01</strong><span>/ <?= str_pad((string) count($whySlides), 2, '0', STR_PAD_LEFT) ?></span></div><div class="slth-slider-dots"><?php foreach ($whySlides as $index => $slide): ?><button type="button" class="slth-slider-dot<?= $index === 0 ? ' is-active' : '' ?>" data-slider-dot="<?= $index ?>" aria-label="Zobraziť fotografiu <?= $index + 1 ?>"></button><?php endforeach; ?></div><button type="button" class="slth-slider-arrow" data-slider-next aria-label="Nasledujúca fotografia">→</button></div></div><div class="slth-why-content reveal"><p class="eyebrow">Prečo si vybrať GARCIA</p><h2>Drevo oživíme. Jeho charakter <em>zachováme.</em></h2><p>Spájame dôkladnú prípravu, správne ošetrenie a čistú remeselnú prácu — od prvého stretnutia až po posledný detail.</p><div class="slth-why-list"><?php foreach ($whyItems as $item): ?><div class="slth-why-item"><div class="slth-why-item__icon"><?= e($item['symbol']) ?></div><div><h3><?= e($item['title']) ?></h3><p><?= e($item['desc']) ?></p></div></div><?php endforeach; ?></div></div></div></section>
+<section class="slth-why-section"><div class="container slth-why-grid"><div class="slth-why-media slth-why-slider reveal" data-slider><div class="slth-slider-track"><?php foreach ($whySlides as $index => $slide): ?><figure class="slth-slider-slide<?= $index === 0 ? ' is-active' : '' ?>" data-slide><img src="<?= e($slide['src']) ?>" alt="<?= e($slide['alt']) ?>" loading="<?= $index === 0 ? 'eager' : 'lazy' ?>"><figcaption><?= e($slide['label']) ?></figcaption></figure><?php endforeach; ?></div><div class="slth-slider-controls"><button type="button" class="slth-slider-arrow" data-slider-prev aria-label="Predchádzajúca fotografia"></button><div class="slth-slider-counter"><strong data-slider-current>01</strong><span>/ <?= str_pad((string) count($whySlides), 2, '0', STR_PAD_LEFT) ?></span></div><div class="slth-slider-dots"><?php foreach ($whySlides as $index => $slide): ?><button type="button" class="slth-slider-dot<?= $index === 0 ? ' is-active' : '' ?>" data-slider-dot="<?= $index ?>" aria-label="Zobraziť fotografiu <?= $index + 1 ?>"></button><?php endforeach; ?></div><button type="button" class="slth-slider-arrow" data-slider-next aria-label="Nasledujúca fotografia"></button></div></div><div class="slth-why-content reveal"><p class="eyebrow"><?= e($home['why_intro']['eyebrow']) ?></p><h2><?= $home['why_intro']['title'] ?></h2><p><?= e($home['why_intro']['description']) ?></p><div class="slth-why-list"><?php foreach ($whyItems as $item): ?><div class="slth-why-item"><div class="slth-why-item__icon"><?= e($item['symbol']) ?></div><div><h3><?= e($item['title']) ?></h3><p><?= e($item['desc']) ?></p></div></div><?php endforeach; ?></div></div></div></section>
 
 <section class="trust-section">
     <div class="container">
-        <div class="slth-section-header slth-section-header--center"><p class="eyebrow">Na čom si zakladáme</p><h2>Dobrá práca je viac než <em>pekný povrch.</em></h2><p>Chceme, aby po každej realizácii zostal nielen dobrý výsledok, ale aj pocit, že všetko prebehlo férovo a s pozornosťou.</p></div>
+        <div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($home['trust_intro']['eyebrow']) ?></p><h2><?= $home['trust_intro']['title'] ?></h2><p><?= e($home['trust_intro']['description']) ?></p></div>
         <div class="trust-grid">
             <?php foreach ($trustPoints as $index => $point): ?>
                 <article class="trust-card reveal"><span>0<?= $index + 1 ?></span><h3><?= e($point['title']) ?></h3><p><?= e($point['text']) ?></p></article>
@@ -136,7 +148,7 @@ $reviews = [
 
 <section class="reviews-section">
     <div class="container">
-        <div class="slth-section-header slth-section-header--center"><p class="eyebrow">Referencie</p><h2>Spolupráca, na ktorú sa <em>nezabúda.</em></h2><p>Ukážkové texty referencií sú pripravené na nahradenie skutočnými hodnoteniami po realizáciách.</p></div>
+        <div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($home['reviews_intro']['eyebrow']) ?></p><h2><?= $home['reviews_intro']['title'] ?></h2><p><?= e($home['reviews_intro']['description']) ?></p></div>
         <div class="reviews-grid">
             <?php foreach ($reviews as $review): ?>
                 <article class="review-card">
@@ -151,14 +163,14 @@ $reviews = [
 
 <section class="slth-process">
     <div class="container">
-        <div class="slth-section-header slth-section-header--center"><p class="eyebrow">Ako prebieha spolupráca</p><h2>Proces renovácie</h2><p>Jasný postup od prvého kontaktu až po drevo pripravené na ďalšie roky.</p></div>
+        <div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($home['process_intro']['eyebrow']) ?></p><h2><?= $home['process_intro']['title'] ?></h2><p><?= e($home['process_intro']['description']) ?></p></div>
         <div class="slth-process-grid"><?php foreach ($processSteps as $i => $step): ?><div class="slth-process-step reveal"><div class="slth-process-step__num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></div><h3><?= e($step['title']) ?></h3><p><?= e($step['desc']) ?></p></div><?php endforeach; ?></div>
         <div class="slth-process__cta"><div><span>Ďalší krok</span><strong>Máte drevo, ktoré potrebuje nový začiatok?</strong></div><a href="kontakt.php" class="btn btn--gold">Nezáväzná konzultácia</a></div>
     </div>
 </section>
 
-<section class="slth-gallery-section" id="galeria"><div class="container"><div class="slth-gallery-intro"><div class="slth-section-header"><p class="eyebrow">Naša práca</p><h2>Galéria realizácií</h2><p>Výber z obnovy chát, drevených stavieb, terás, okien a detailov.</p></div><a href="realizacie.php" class="btn btn--gold">Zobraziť celú galériu</a></div><div class="slth-gallery-grid"><?php $previewImages = [['src' => 'assets/images/realizacie/Chata/814754130_4710092289220022_5544860182670447562_n.jpg', 'label' => 'Zrubová chata'], ['src' => 'assets/images/realizacie/chaty/vstupna-terasa-final.jpg', 'label' => 'Vstupná terasa'], ['src' => 'assets/images/realizacie/okna/strese-okno-final.jpg', 'label' => 'Renovácia okna'], ['src' => 'assets/images/proces/obklad-brusenie-detail.jpg', 'label' => 'Brúsenie povrchu']]; foreach ($previewImages as $image): ?><a href="realizacie.php" class="slth-gallery-item reveal"><img src="<?= e($image['src']) ?>" alt="<?= e($image['label']) ?>" loading="lazy"><span><?= e($image['label']) ?></span></a><?php endforeach; ?></div></div></section>
+<section class="slth-gallery-section" id="galeria"><div class="container"><div class="slth-gallery-intro"><div class="slth-section-header"><p class="eyebrow"><?= e($home['gallery_intro']['eyebrow']) ?></p><h2><?= $home['gallery_intro']['title'] ?></h2><p><?= e($home['gallery_intro']['description']) ?></p></div><a href="realizacie.php" class="btn btn--gold"><?= e($home['gallery_intro']['button']) ?></a></div><div class="slth-gallery-grid"><?php foreach ($home['gallery_preview'] as $image): ?><a href="realizacie.php" class="slth-gallery-item reveal"><img src="<?= e($image['src']) ?>" alt="<?= e($image['label']) ?>" loading="lazy"><span><?= e($image['label']) ?></span></a><?php endforeach; ?></div></div></section>
 
-<section class="slth-cta-section" style="--cta-image: url('assets/images/realizacie/chaty/zrub-front-detail.jpg');"><div class="slth-cta-section__overlay"></div><div class="container slth-cta-section__inner"><h2>Chcete, aby vaše drevo opäť vyniklo?</h2><p>Napíšte nám a pripravíme vám nezáväzné odporúčanie podľa vášho projektu.</p><div class="slth-cta-section__actions"><a href="kontakt.php" class="btn btn--gold btn--lg">Kontaktovať GARCIA</a></div></div></section>
+<section class="slth-cta-section" style="--cta-image: url('<?= e($home['cta']['image']) ?>');"><div class="slth-cta-section__overlay"></div><div class="container slth-cta-section__inner"><h2><?= e($home['cta']['title']) ?></h2><p><?= e($home['cta']['description']) ?></p><div class="slth-cta-section__actions"><a href="kontakt.php" class="btn btn--gold btn--lg"><?= e($home['cta']['button']) ?></a></div></div></section>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
