@@ -29,14 +29,40 @@ function admin_label(string|int $key): string
     return mb_convert_case($label, MB_CASE_TITLE, 'UTF-8');
 }
 
+function admin_section_slug(string|int $key): string
+{
+    return 'admin-section-' . trim((string) preg_replace('/[^a-z0-9]+/i', '-', (string) $key), '-');
+}
+
+function admin_section_label(string|int $key): string
+{
+    $labels = [
+        'site' => 'Základné údaje',
+        'seo' => 'SEO nastavenia',
+        'navigation' => 'Navigácia',
+        'home' => 'Domov',
+        'services_page' => 'Služby',
+        'gallery_page' => 'Realizácie',
+        'project_page' => 'Detail projektu',
+        'about_page' => 'O nás',
+        'contact_page' => 'Kontakt',
+        'legal' => 'GDPR a súkromie',
+        'project_gallery' => 'Galéria projektu',
+        'footer' => 'Pätička',
+        'contact_prompt' => 'Záverečná výzva',
+    ];
+    return $labels[(string) $key] ?? admin_label($key);
+}
+
 function admin_render_value(mixed $value, array $path = []): void
 {
     if (is_array($value)) {
-        $isList = array_is_list($value);
         echo '<div class="admin-fields' . ($path ? ' admin-fields--nested' : '') . '">';
         foreach ($value as $key => $child) {
             if (is_array($child)) {
-                echo '<fieldset class="admin-group"><legend>' . admin_h(is_int($key) ? admin_label($path ? $key + 1 : $key) : admin_label($key)) . '</legend>';
+                $groupLabel = !$path && !is_int($key) ? admin_section_label($key) : (is_int($key) ? admin_label($path ? $key + 1 : $key) : admin_label($key));
+                $groupId = !$path ? ' id="' . admin_h(admin_section_slug($key)) . '"' : '';
+                echo '<fieldset class="admin-group"' . $groupId . '><legend>' . admin_h($groupLabel) . '</legend>';
                 admin_render_value($child, [...$path, $key]);
                 echo '</fieldset>';
                 continue;
@@ -139,7 +165,7 @@ $token = admin_csrf_token();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>GARCIA CMS</title>
-    <link rel="stylesheet" href="../assets/css/admin.css?v=1">
+    <link rel="stylesheet" href="../assets/css/admin.css?v=2">
 </head>
 <body class="admin-body">
 <main class="admin-shell">
@@ -154,7 +180,18 @@ $token = admin_csrf_token();
         <section class="admin-card admin-toolbar"><div><span class="admin-kicker">Obsah a médiá</span><h2>Upravte web bez zásahu do kódu</h2><p>Texty s označením <code>&lt;em&gt;</code> podporujú zvýraznenie kurzívou. Pri obrázkoch použite cestu z knižnice médií.</p></div><div class="admin-toolbar__actions"><a class="admin-button admin-button--muted" href="../" target="_blank" rel="noopener">Zobraziť web</a><button class="admin-button" form="content-form" type="submit">Uložiť všetko</button></div></section>
         <section class="admin-card"><span class="admin-kicker">Knižnica médií</span><h2>Nahrať nový obrázok</h2><form class="admin-upload" method="post" enctype="multipart/form-data"><input type="hidden" name="action" value="upload"><input type="hidden" name="csrf" value="<?= admin_h($token) ?>"><input type="file" name="media" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" required><button class="admin-button admin-button--dark" type="submit">Nahrať obrázok</button></form><?php if (admin_media_files()): ?><div class="admin-media-grid"><?php foreach (admin_media_files() as $media): ?><figure><img src="../<?= admin_h($media) ?>" alt=""><figcaption><code><?= admin_h($media) ?></code></figcaption></figure><?php endforeach; ?></div><?php endif; ?></section>
         <form id="content-form" class="admin-editor" method="post"><input type="hidden" name="action" value="save"><input type="hidden" name="csrf" value="<?= admin_h($token) ?>">
-            <?php admin_render_value($content); ?>
+            <div class="admin-editor-layout">
+                <aside class="admin-sidebar" aria-label="Sekcie administrácie">
+                    <span class="admin-sidebar__title">Upraviť sekciu</span>
+                    <nav class="admin-sidebar__nav">
+                        <?php foreach ($content as $sectionKey => $sectionValue): ?>
+                            <?php if (!is_array($sectionValue)) continue; ?>
+                            <a href="#<?= admin_h(admin_section_slug($sectionKey)) ?>"><?= admin_h(admin_section_label($sectionKey)) ?></a>
+                        <?php endforeach; ?>
+                    </nav>
+                </aside>
+                <div class="admin-editor__content"><?php admin_render_value($content); ?></div>
+            </div>
             <div class="admin-savebar"><button class="admin-button" type="submit">Uložiť všetky zmeny</button><span>Po uložení obnovte verejnú stránku.</span></div>
         </form>
     <?php endif; ?>
