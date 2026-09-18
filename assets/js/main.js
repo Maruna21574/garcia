@@ -205,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lightbox.classList.remove('is-open');
         lightbox.setAttribute('aria-hidden', 'true');
         body.classList.remove('menu-open');
+        body.classList.remove('lightbox-open');
     };
 
     if (lightbox && lightboxImage) {
@@ -227,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
             lightbox.classList.add('is-open');
             lightbox.setAttribute('aria-hidden', 'false');
             body.classList.add('menu-open');
+            body.classList.add('lightbox-open');
         };
 
         const moveLightbox = (direction) => {

@@ -6063,6 +6063,7 @@ html.js .reveal.is-visible {
 }
 /* Modern gallery lightbox */
 .lightbox {
+  z-index: 200;
   padding: 24px;
 }
 
@@ -6434,6 +6435,14 @@ html.js .reveal.is-visible {
   justify-content: center;
 }
 
+@media (max-width: 767px) {
+  body.lightbox-open .site-header {
+    display: none !important;
+  }
+  body.lightbox-open .floating-contact {
+    display: none !important;
+  }
+}
 /* Dark wood header state */
 .site-header.is-scrolled {
   color: rgba(255, 255, 255, 0.88);

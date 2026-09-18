@@ -1267,7 +1267,7 @@ html.js .reveal.is-visible { opacity: 1; transform: translateY(0); }
 }
 
 /* Modern gallery lightbox */
-.lightbox { padding: 24px; }
+.lightbox { z-index: 200; padding: 24px; }
 .lightbox__backdrop { background: rgba(13,11,9,.86); backdrop-filter: blur(8px); }
 .lightbox__dialog { display: grid; grid-template-columns: minmax(0, 1fr) 285px; width: min(1120px, 100%); height: min(820px, calc(100vh - 48px)); max-width: none; max-height: min(820px, calc(100vh - 48px)); overflow: hidden; padding: 0; border: 1px solid rgba(255,255,255,.16); border-radius: 22px; background: #17100b; box-shadow: 0 35px 100px rgba(0,0,0,.48); }
 .lightbox__media { position: relative; display: grid; min-width: 0; min-height: 0; height: 100%; place-items: center; overflow: hidden; background: radial-gradient(circle at 50% 35%, #3b291b 0, #1b120c 65%); }
@@ -1335,6 +1335,11 @@ html.js .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 .lightbox__close { z-index: 120; pointer-events: auto; }
 .mobile-nav__contact { justify-content: center; }
+
+@media (max-width: 767px) {
+    body.lightbox-open .site-header { display: none !important; }
+    body.lightbox-open .floating-contact { display: none !important; }
+}
 
 /* Dark wood header state */
 .site-header.is-scrolled {
