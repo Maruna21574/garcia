@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/cms.php';
+require_once __DIR__ . '/includes/mail.php';
 $content = cms_data();
 $contactPage = $content['contact_page'];
 $recipientEmail = trim((string) $content['site']['email']);
@@ -53,17 +54,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $formState = 'setup';
     } else {
         $project = trim((string) ($_POST['project'] ?? ''));
-        $body = "Meno: {$old['name']}\nE-mail: {$old['email']}\nTelefón: {$old['phone']}\nTyp projektu: {$project}\nFotografia: " . ($attachment ? 'áno' : 'nie') . "\n\nSpráva:\n{$old['message']}";
-        if ($attachment) {
-            $boundary = 'garcia-' . bin2hex(random_bytes(10));
-            $fileContents = chunk_split(base64_encode((string) file_get_contents($attachment['path'])));
-            $headers = "From: GARCIA web <" . $recipientEmail . ">\r\nReply-To: " . $old['email'] . "\r\nMIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
-            $mailBody = "--{$boundary}\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n{$body}\r\n\r\n--{$boundary}\r\nContent-Type: {$attachment['mime']}; name=\"{$attachment['name']}\"\r\nContent-Disposition: attachment; filename=\"{$attachment['name']}\"\r\nContent-Transfer-Encoding: base64\r\n\r\n{$fileContents}\r\n--{$boundary}--\r\n";
-        } else {
-            $headers = "From: GARCIA web <" . $recipientEmail . ">\r\nReply-To: " . $old['email'] . "\r\nContent-Type: text/plain; charset=UTF-8\r\n";
-            $mailBody = $body;
+
+        $inlineImage = $attachment ? mail_prepare_inline_image($attachment['path'], $attachment['mime']) : null;
+
+        $adminHtml = mail_admin_inquiry_html($old['name'], $old['email'], $old['phone'], $project, $old['message'], $inlineImage !== null);
+        $sent = mail_send_html($recipientEmail, 'Nový dopyt z webu GARCIA', $recipientEmail, 'GARCIA web', $old['email'], $adminHtml, $inlineImage);
+
+        if ($sent) {
+            $customerHtml = mail_customer_confirmation_html($old['name'], $content['site'], $inlineImage !== null);
+            mail_send_html($old['email'], 'Ďakujeme za váš dopyt — GARCIA', $recipientEmail, (string) $content['site']['name'], $recipientEmail, $customerHtml, $inlineImage);
         }
-        $sent = @mail($recipientEmail, 'Nový dopyt z webu GARCIA', $mailBody, $headers);
+
         $formState = $sent ? 'success' : 'mail-error';
         if ($sent) $old = ['name' => '', 'email' => '', 'phone' => '', 'message' => ''];
     }
