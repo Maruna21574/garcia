@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /includes/
+Disallow: /assets/scss/
+
+Sitemap: https://www.garcia.sk/sitemap.xml
