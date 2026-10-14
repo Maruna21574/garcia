@@ -132,6 +132,7 @@ function mail_customer_confirmation_html(string $name, array $site, bool $hasPho
 function mail_send_html(string $to, string $subject, string $fromAddress, string $fromName, string $replyTo, string $html, ?array $inlineImage): bool
 {
     $headers = 'From: ' . $fromName . ' <' . $fromAddress . ">\r\n";
+    $headers .= 'Sender: ' . $fromAddress . "\r\n";
     if ($replyTo !== '') $headers .= 'Reply-To: ' . $replyTo . "\r\n";
     $headers .= "MIME-Version: 1.0\r\n";
 
@@ -148,5 +149,5 @@ function mail_send_html(string $to, string $subject, string $fromAddress, string
         $body = $html;
     }
 
-    return @mail($to, $subject, $body, $headers);
+    return @mail($to, $subject, $body, $headers, '-f' . $fromAddress);
 }

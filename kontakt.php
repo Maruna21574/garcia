@@ -6,6 +6,7 @@ require_once __DIR__ . '/includes/mail.php';
 $content = cms_data();
 $contactPage = $content['contact_page'];
 $recipientEmail = trim((string) $content['site']['email']);
+$adminRecipientEmail = MAIL_TO;
 $senderEmail = MAIL_FROM;
 
 $formState = null;
@@ -59,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $inlineImage = $attachment ? mail_prepare_inline_image($attachment['path'], $attachment['mime']) : null;
 
         $adminHtml = mail_admin_inquiry_html($old['name'], $old['email'], $old['phone'], $project, $old['message'], $inlineImage !== null);
-        $sent = mail_send_html($recipientEmail, 'Nový dopyt z webu GARCIA', $senderEmail, 'GARCIA web', $old['email'], $adminHtml, $inlineImage);
+        $sent = mail_send_html($adminRecipientEmail, 'Nový dopyt z webu GARCIA', $senderEmail, 'GARCIA web', $old['email'], $adminHtml, $inlineImage);
 
         if ($sent) {
             $customerHtml = mail_customer_confirmation_html($old['name'], $content['site'], $inlineImage !== null);

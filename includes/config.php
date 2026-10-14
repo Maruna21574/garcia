@@ -9,6 +9,7 @@ const SITE_URL = 'https://garcia.sk';
 
 const CONTACT_EMAIL = 'info@garcia.sk';
 const MAIL_FROM = 'peter.cupka@garcia.sk';
+const MAIL_TO = 'peter.cupka@garcia.sk';
 const CONTACT_PHONE = '0905 938 699';
 const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61592275994218&locale=sk_SK';
 
