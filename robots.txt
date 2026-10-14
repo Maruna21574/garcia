@@ -3,4 +3,4 @@ Allow: /
 Disallow: /includes/
 Disallow: /assets/scss/
 
-Sitemap: https://www.garcia.sk/sitemap.xml
+Sitemap: https://targos.sk/sitemap.xml
