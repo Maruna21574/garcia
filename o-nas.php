@@ -18,7 +18,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container slth-page-hero__inner">
         <h1><?= $aboutPage['hero']['title'] ?></h1>
         <p><?= e($aboutPage['hero']['description']) ?></p>
-        <div class="slth-breadcrumb"><a href="index.php">GARCIA</a><span>/</span><a href="o-nas.php" aria-current="page">o nás</a></div>
+        <div class="slth-breadcrumb"><a href="/">GARCIA</a><span>/</span><a href="/o-nas" aria-current="page">o nás</a></div>
     </div>
 </section>
 
@@ -29,7 +29,7 @@ require __DIR__ . '/includes/header.php';
             <p class="eyebrow"><?= e($aboutPage['about']['eyebrow']) ?></p>
             <h2><?= $aboutPage['about']['title'] ?></h2>
             <?php foreach ($aboutPage['about']['paragraphs'] as $paragraph): ?><p><?= e($paragraph) ?></p><?php endforeach; ?>
-            <a href="kontakt.php" class="btn btn--outline-dark">Porozprávať sa o projekte</a>
+            <a href="/kontakt" class="btn btn--outline-dark">Porozprávať sa o projekte</a>
         </div>
     </div>
 </section>

@@ -17,7 +17,16 @@ $publicOrigin = in_array($requestHost, ['garcia.clicki.sk', 'garcia.sk', 'www.ga
 $cmsSocialImage = (string) ($cmsSite['social_image'] ?? 'assets/images/brand/og-garcia-chata.jpg');
 $socialImage = $socialImage ?? (preg_match('/^https?:\/\//i', $cmsSocialImage) ? $cmsSocialImage : rtrim($publicOrigin, '/') . '/' . ltrim($cmsSocialImage, '/'));
 $currentScript = basename((string) ($_SERVER['SCRIPT_NAME'] ?? 'index.php'));
-$canonicalUrl = rtrim(SITE_URL, '/') . ($currentScript === 'index.php' ? '/' : '/' . $currentScript);
+$canonicalPaths = [
+    'index.php' => '/',
+    'sluzby.php' => '/sluzby',
+    'realizacie.php' => '/realizacie',
+    'o-nas.php' => '/o-nas',
+    'kontakt.php' => '/kontakt',
+    'realizacia-chata.php' => '/realizacia-chata',
+    'ochrana-sukromia.php' => '/ochrana-sukromia',
+];
+$canonicalUrl = rtrim(SITE_URL, '/') . ($canonicalPaths[$currentScript] ?? '/' . $currentScript);
 $schemaPhone = preg_replace('/\D+/', '', (string) $cmsSite['phone']);
 $schemaPhone = $schemaPhone !== '' && strpos($schemaPhone, '0') === 0 ? '+421' . substr($schemaPhone, 1) : ($schemaPhone !== '' ? '+' . $schemaPhone : '');
 $businessSchema = [
@@ -87,12 +96,12 @@ $businessSchema = [
             </div>
         </div>
         <div class="container header__inner">
-            <a href="index.php" class="logo" aria-label="GARCIA — domov">
+            <a href="/" class="logo" aria-label="GARCIA — domov">
                 <img src="<?= e($cmsSite['logo']) ?>" alt="<?= e($cmsSite['name'] . ' — ' . $cmsSite['tagline']) ?>" class="logo__img">
             </a>
             <nav class="main-nav" id="main-nav" data-nav aria-label="Hlavná navigácia">
                 <div class="mobile-nav__head">
-                    <a href="index.php" class="mobile-nav__logo" aria-label="GARCIA — domov">
+                    <a href="/" class="mobile-nav__logo" aria-label="GARCIA — domov">
                         <img src="<?= e($cmsSite['logo']) ?>" alt="<?= e($cmsSite['name']) ?>" class="mobile-nav__logo-img">
                     </a>
                     <button class="mobile-nav__close" type="button" data-mobile-menu-close aria-label="Zavrieť menu"><span></span><span></span></button>
@@ -102,10 +111,10 @@ $businessSchema = [
                     <li><a href="<?= e($item['href']) ?>"<?= is_active($key, $activePage) ?>><?= e($item['label']) ?></a></li>
                     <?php endforeach; ?>
                 </ul>
-                <a class="mobile-nav__contact" href="kontakt.php">Kontakt</a>
+                <a class="mobile-nav__contact" href="/kontakt">Kontakt</a>
             </nav>
             <div class="header__actions">
-                <a href="kontakt.php" class="btn btn--gold header__cta"><?= e($cmsSite['header_cta']) ?></a>
+                <a href="/kontakt" class="btn btn--gold header__cta"><?= e($cmsSite['header_cta']) ?></a>
                 <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="main-nav" data-menu-toggle>
                     <span></span><span></span><span></span>
                 </button>

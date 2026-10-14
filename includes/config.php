@@ -13,11 +13,11 @@ const CONTACT_PHONE = '0905 938 699';
 const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61592275994218&locale=sk_SK';
 
 $navigation = [
-    'domov' => ['label' => 'Domov', 'href' => 'index.php'],
-    'sluzby' => ['label' => 'Služby', 'href' => 'sluzby.php'],
-    'realizacie' => ['label' => 'Realizácie', 'href' => 'realizacie.php'],
-    'o-nas' => ['label' => 'O nás', 'href' => 'o-nas.php'],
-    'kontakt' => ['label' => 'Kontakt', 'href' => 'kontakt.php'],
+    'domov' => ['label' => 'Domov', 'href' => '/'],
+    'sluzby' => ['label' => 'Služby', 'href' => '/sluzby'],
+    'realizacie' => ['label' => 'Realizácie', 'href' => '/realizacie'],
+    'o-nas' => ['label' => 'O nás', 'href' => '/o-nas'],
+    'kontakt' => ['label' => 'Kontakt', 'href' => '/kontakt'],
 ];
 
 function e(string $value): string

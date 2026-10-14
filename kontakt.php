@@ -85,7 +85,7 @@ require __DIR__ . '/includes/header.php';
         <source src="<?= e($contactPage['hero']['video']) ?>" type="video/mp4">
     </video>
     <div class="container slth-page-hero__inner">
-        <div class="slth-breadcrumb"><a href="index.php">GARCIA</a><span>/</span><a href="kontakt.php" aria-current="page">kontakt</a></div>
+        <div class="slth-breadcrumb"><a href="/">GARCIA</a><span>/</span><a href="/kontakt" aria-current="page">kontakt</a></div>
         <h1><?= $contactPage['hero']['title'] ?></h1>
         <p><?= e($contactPage['hero']['description']) ?></p>
     </div>
@@ -113,7 +113,7 @@ require __DIR__ . '/includes/header.php';
                 <div class="form-row"><label for="phone">Telefón <small>nepovinné</small><input id="phone" name="phone" type="tel" value="<?= e($old['phone']) ?>" placeholder="+421 ..."></label><label for="project">Typ projektu <small>nepovinné</small><select id="project" name="project"><option value="">Vyberte možnosť</option><option>Chata alebo drevená stavba</option><option>Fasáda alebo obklad</option><option>Terasa alebo zábradlie</option><option>Okno alebo dvere</option><option>Iné</option></select></label></div>
                 <label for="message">Správa <span>*</span><textarea id="message" name="message" rows="5" placeholder="Stručne opíšte projekt, lokalitu a predstavu..." required><?= e($old['message']) ?></textarea></label>
                 <label class="form-file" for="photo"><?= e($contactPage['form']['photo_label']) ?> <small><?= e($contactPage['form']['photo_help']) ?></small><input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
-                <label class="form-check"><input type="checkbox" name="consent" required><span>Súhlasím so spracovaním údajov na účely odpovede na dopyt. <a href="ochrana-sukromia.php">Viac informácií</a>.</span></label>
+                <label class="form-check"><input type="checkbox" name="consent" required><span>Súhlasím so spracovaním údajov na účely odpovede na dopyt. <a href="/ochrana-sukromia">Viac informácií</a>.</span></label>
                 <input type="text" name="website" tabindex="-1" autocomplete="off" class="form-honeypot" aria-hidden="true">
                 <button class="button button--dark button--full" type="submit"><?= e($contactPage['form']['submit']) ?></button>
             </form>

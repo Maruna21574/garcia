@@ -109,7 +109,7 @@ function admin_media_files(): array
 
 if (isset($_GET['logout'])) {
     admin_logout();
-    header('Location: index.php');
+    header('Location: /admin/');
     exit;
 }
 
@@ -133,7 +133,7 @@ if ($config && !admin_is_logged_in() && $_SERVER['REQUEST_METHOD'] === 'POST' &&
     } elseif ($lockRemaining > 0) {
         $error = 'Príliš veľa neúspešných pokusov. Skúste to znova o ' . (int) ceil($lockRemaining / 60) . ' min.';
     } elseif (admin_login((string) ($_POST['password'] ?? ''))) {
-        header('Location: index.php'); exit;
+        header('Location: /admin/'); exit;
     } else {
         $error = 'Nesprávne heslo.';
     }

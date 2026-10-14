@@ -28,11 +28,11 @@ function cms_defaults(): array
             'contact' => ['title' => 'Kontakt — GARCIA', 'description' => 'Kontaktujte GARCIA pre nezáväznú konzultáciu a cenovú ponuku na renováciu dreva.', 'keywords' => 'kontakt renovácia dreva, cenová ponuka, konzultácia'],
         ],
         'navigation' => [
-            'domov' => ['label' => 'Domov', 'href' => 'index.php'],
-            'sluzby' => ['label' => 'Služby', 'href' => 'sluzby.php'],
-            'realizacie' => ['label' => 'Realizácie', 'href' => 'realizacie.php'],
-            'o-nas' => ['label' => 'O nás', 'href' => 'o-nas.php'],
-            'kontakt' => ['label' => 'Kontakt', 'href' => 'kontakt.php'],
+            'domov' => ['label' => 'Domov', 'href' => '/'],
+            'sluzby' => ['label' => 'Služby', 'href' => '/sluzby'],
+            'realizacie' => ['label' => 'Realizácie', 'href' => '/realizacie'],
+            'o-nas' => ['label' => 'O nás', 'href' => '/o-nas'],
+            'kontakt' => ['label' => 'Kontakt', 'href' => '/kontakt'],
         ],
         'home' => [
             'hero' => [
@@ -41,9 +41,9 @@ function cms_defaults(): array
                 'title' => 'Vrátime drevu <em>jeho charakter.</em>',
                 'subtitle' => 'Renovujeme drevené chaty, stavby, terasy, okná a dvere s dôrazom na prirodzenú krásu, detail a dlhú životnosť.',
                 'primary_label' => 'Vyžiadať cenovú ponuku',
-                'primary_url' => 'kontakt.php',
+                'primary_url' => '/kontakt',
                 'secondary_label' => 'Pozrieť realizácie',
-                'secondary_url' => 'realizacie.php',
+                'secondary_url' => '/realizacie',
                 'scroll_label' => 'Objavte GARCIA',
             ],
             'ticker' => ['RENOVÁCIA DREVA', 'BRÚSENIE POVRCHOV', 'OCHRANA DREVA', 'CHATY A ZRUBY', 'TERASY A OKNÁ'],
@@ -202,6 +202,36 @@ function cms_merge(array $defaults, array $stored): array
     return $defaults;
 }
 
+function cms_clean_page_link(string $value): string
+{
+    $routes = [
+        'index.php' => '/',
+        'sluzby.php' => '/sluzby',
+        'realizacie.php' => '/realizacie',
+        'o-nas.php' => '/o-nas',
+        'kontakt.php' => '/kontakt',
+        'realizacia-chata.php' => '/realizacia-chata',
+        'ochrana-sukromia.php' => '/ochrana-sukromia',
+    ];
+
+    foreach ($routes as $legacy => $clean) {
+        if ($value === $legacy) return $clean;
+        if (str_starts_with($value, $legacy . '#')) return $clean . substr($value, strlen($legacy));
+    }
+
+    return $value;
+}
+
+function cms_normalize_links(mixed $value): mixed
+{
+    if (is_array($value)) {
+        foreach ($value as $key => $item) $value[$key] = cms_normalize_links($item);
+        return $value;
+    }
+
+    return is_string($value) ? cms_clean_page_link($value) : $value;
+}
+
 function cms_data(): array
 {
     static $content;
@@ -212,7 +242,7 @@ function cms_data(): array
         $stored = json_decode((string) file_get_contents(CMS_STORAGE_FILE), true);
         if (is_array($stored)) $defaults = cms_merge($defaults, $stored);
     }
-    $content = $defaults;
+    $content = cms_normalize_links($defaults);
     return $content;
 }
 

@@ -39,7 +39,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container slth-page-hero__inner">
         <h1><?= $galleryPage['hero']['title'] ?></h1>
         <p><?= e($galleryPage['hero']['description']) ?></p>
-        <div class="slth-breadcrumb"><a href="index.php">GARCIA</a><span>/</span><a href="realizacie.php" aria-current="page">realizácie</a></div>
+        <div class="slth-breadcrumb"><a href="/">GARCIA</a><span>/</span><a href="/realizacie" aria-current="page">realizácie</a></div>
     </div>
 </section>
 

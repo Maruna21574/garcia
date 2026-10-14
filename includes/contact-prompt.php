@@ -9,7 +9,7 @@
             </div>
             <div class="contact-bottom__action">
                 <span><?= e($contactPrompt['eyebrow_action']) ?></span>
-                <a href="kontakt.php#dopyt" class="btn btn--gold"><?= e($contactPrompt['button']) ?></a>
+                <a href="/kontakt#dopyt" class="btn btn--gold"><?= e($contactPrompt['button']) ?></a>
                 <small><?= e($contactPrompt['note']) ?></small>
             </div>
         </div>

@@ -16,7 +16,7 @@ require __DIR__ . '/includes/header.php';
         <p class="eyebrow">GARCIA / detail realizácie</p>
         <h1><?= $projectPage['hero']['title'] ?></h1>
         <p><?= e($projectPage['hero']['description']) ?></p>
-        <div class="slth-breadcrumb"><a href="realizacie.php">Realizácie</a><span>/</span><span>Drevená chata</span></div>
+        <div class="slth-breadcrumb"><a href="/realizacie">Realizácie</a><span>/</span><span>Drevená chata</span></div>
     </div>
 </section>
 
@@ -33,7 +33,7 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <section class="slth-gallery-section">
-    <div class="container"><div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($projectPage['gallery']['eyebrow']) ?></p><h2><?= $projectPage['gallery']['title'] ?></h2><p><?= e($projectPage['gallery']['description']) ?></p></div><div class="slth-gallery-grid"><?php foreach ($projectPage['gallery']['items'] as $item): ?><a class="slth-gallery-item reveal" href="realizacie.php"><img src="<?= e($item['src']) ?>" alt="<?= e($item['alt']) ?>" loading="lazy"><span><?= e($item['label']) ?></span></a><?php endforeach; ?></div></div>
+    <div class="container"><div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($projectPage['gallery']['eyebrow']) ?></p><h2><?= $projectPage['gallery']['title'] ?></h2><p><?= e($projectPage['gallery']['description']) ?></p></div><div class="slth-gallery-grid"><?php foreach ($projectPage['gallery']['items'] as $item): ?><a class="slth-gallery-item reveal" href="/realizacie"><img src="<?= e($item['src']) ?>" alt="<?= e($item['alt']) ?>" loading="lazy"><span><?= e($item['label']) ?></span></a><?php endforeach; ?></div></div>
 </section>
 
 <section class="slth-process"><div class="container"><div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($projectPage['process']['eyebrow']) ?></p><h2><?= $projectPage['process']['title'] ?></h2><p><?= e($projectPage['process']['description']) ?></p></div><div class="slth-process-grid"><?php foreach ($projectPage['process']['steps'] as $index => $step): ?><div class="slth-process-step reveal"><div class="slth-process-step__num"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></div><h3><?= e($step['title']) ?></h3><p><?= e($step['desc']) ?></p></div><?php endforeach; ?></div></div></section>

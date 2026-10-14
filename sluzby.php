@@ -71,7 +71,7 @@ $details = $servicesPage['details'];
     <div class="container slth-page-hero__inner">
         <h1><?= $servicesPage['hero']['title'] ?></h1>
         <p><?= e($servicesPage['hero']['description']) ?></p>
-        <div class="slth-breadcrumb"><a href="index.php">GARCIA</a><span>/</span><a href="sluzby.php" aria-current="page">služby</a></div>
+        <div class="slth-breadcrumb"><a href="/">GARCIA</a><span>/</span><a href="/sluzby" aria-current="page">služby</a></div>
     </div>
 </section>
 
@@ -123,7 +123,7 @@ $details = $servicesPage['details'];
                 <p class="eyebrow"><?= e($detail['eyebrow']) ?></p>
                 <h2><?= $detail['title'] ?></h2>
                 <p><?= e($detail['text']) ?></p>
-                <a href="kontakt.php" class="btn btn--outline-dark">Nezáväzná konzultácia</a>
+                <a href="/kontakt" class="btn btn--outline-dark">Nezáväzná konzultácia</a>
             </div>
         </div>
     </section>

@@ -9,6 +9,31 @@ AddDefaultCharset UTF-8
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1|.*\.test)(:\d+)?$
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    RewriteCond %{THE_REQUEST} \s/+index\.php(?:[?\s]) [NC]
+    RewriteRule ^index\.php$ / [R=301,L,NE]
+    RewriteCond %{THE_REQUEST} \s/+admin/index\.php(?:[?\s]) [NC]
+    RewriteRule ^admin/index\.php$ /admin/ [R=301,L,NE]
+    RewriteCond %{THE_REQUEST} \s/+sluzby\.php(?:[?\s]) [NC]
+    RewriteRule ^sluzby\.php$ /sluzby [R=301,L,NE]
+    RewriteCond %{THE_REQUEST} \s/+realizacie\.php(?:[?\s]) [NC]
+    RewriteRule ^realizacie\.php$ /realizacie [R=301,L,NE]
+    RewriteCond %{THE_REQUEST} \s/+o-nas\.php(?:[?\s]) [NC]
+    RewriteRule ^o-nas\.php$ /o-nas [R=301,L,NE]
+    RewriteCond %{THE_REQUEST} \s/+kontakt\.php(?:[?\s]) [NC]
+    RewriteRule ^kontakt\.php$ /kontakt [R=301,L,NE]
+    RewriteCond %{THE_REQUEST} \s/+realizacia-chata\.php(?:[?\s]) [NC]
+    RewriteRule ^realizacia-chata\.php$ /realizacia-chata [R=301,L,NE]
+    RewriteCond %{THE_REQUEST} \s/+ochrana-sukromia\.php(?:[?\s]) [NC]
+    RewriteRule ^ochrana-sukromia\.php$ /ochrana-sukromia [R=301,L,NE]
+
+    RewriteRule ^(sluzby|realizacie|o-nas|kontakt|realizacia-chata|ochrana-sukromia)/$ /$1 [R=301,L,NE]
+    RewriteRule ^sluzby/?$ sluzby.php [END,QSA]
+    RewriteRule ^realizacie/?$ realizacie.php [END,QSA]
+    RewriteRule ^o-nas/?$ o-nas.php [END,QSA]
+    RewriteRule ^kontakt/?$ kontakt.php [END,QSA]
+    RewriteRule ^realizacia-chata/?$ realizacia-chata.php [END,QSA]
+    RewriteRule ^ochrana-sukromia/?$ ochrana-sukromia.php [END,QSA]
 </IfModule>
 
 <IfModule mod_headers.c>

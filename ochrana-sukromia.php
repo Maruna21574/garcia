@@ -15,7 +15,7 @@ require __DIR__ . '/includes/header.php';
         <p class="eyebrow"><?= e($legal['hero']['eyebrow']) ?></p>
         <h1><?= $legal['hero']['title'] ?></h1>
         <p><?= e($legal['hero']['description']) ?></p>
-        <div class="slth-breadcrumb"><a href="index.php">Domov</a><span>/</span><span>Ochrana súkromia</span></div>
+        <div class="slth-breadcrumb"><a href="/">Domov</a><span>/</span><span>Ochrana súkromia</span></div>
     </div>
 </section>
 
@@ -36,7 +36,7 @@ require __DIR__ . '/includes/header.php';
             <h2<?= $sectionIndex === 5 ? ' id="cookies"' : '' ?>><?= e($section['heading']) ?></h2>
             <p><?= e($section['body']) ?></p>
             <?php if ($sectionIndex === 0): ?><ul class="legal-list"><li>meno a priezvisko,</li><li>e-mail a prípadne telefónne číslo,</li><li>typ projektu a obsah správy,</li><li>fotografie projektu, ak ich dobrovoľne priložíte k dopytu.</li></ul><?php endif; ?>
-            <?php if ($sectionIndex === 4): ?><p>Požiadavku môžete poslať cez <a href="kontakt.php">kontaktný formulár</a>. Aby sme chránili vaše údaje, môžeme si primerane overiť vašu totožnosť.</p><?php endif; ?>
+            <?php if ($sectionIndex === 4): ?><p>Požiadavku môžete poslať cez <a href="/kontakt">kontaktný formulár</a>. Aby sme chránili vaše údaje, môžeme si primerane overiť vašu totožnosť.</p><?php endif; ?>
             <?php if ($sectionIndex === 5): ?>
         <div class="legal-cookie-table" role="table" aria-label="Zoznam používaných cookies a úložísk">
             <div class="legal-cookie-row legal-cookie-row--head" role="row"><strong role="columnheader">Názov</strong><strong role="columnheader">Typ</strong><strong role="columnheader">Trvanie</strong><strong role="columnheader">Účel</strong></div>

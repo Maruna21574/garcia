@@ -100,7 +100,7 @@ $reviews = $home['reviews'];
         <div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($home['services_intro']['eyebrow']) ?></p><h2><?= $home['services_intro']['title'] ?></h2><p><?= e($home['services_intro']['description']) ?></p></div>
         <div class="slth-services-grid">
             <?php foreach ($services as $service): ?>
-            <article class="slth-service-card reveal"><div class="slth-service-card__icon"><?= service_icon($service['icon']) ?></div><h3><?= e($service['title']) ?></h3><p><?= e($service['desc']) ?></p><a href="sluzby.php#<?= e($service['anchor']) ?>" class="slth-service-card__link">Viac informácií</a></article>
+            <article class="slth-service-card reveal"><div class="slth-service-card__icon"><?= service_icon($service['icon']) ?></div><h3><?= e($service['title']) ?></h3><p><?= e($service['desc']) ?></p><a href="/sluzby#<?= e($service['anchor']) ?>" class="slth-service-card__link">Viac informácií</a></article>
             <?php endforeach; ?>
         </div>
     </div>
@@ -110,7 +110,7 @@ $reviews = $home['reviews'];
     <div class="container">
         <div class="before-after-intro">
             <div class="slth-section-header"><p class="eyebrow"><?= e($home['before_after_intro']['eyebrow']) ?></p><h2><?= $home['before_after_intro']['title'] ?></h2><p><?= e($home['before_after_intro']['description']) ?></p></div>
-            <a href="realizacie.php" class="btn btn--outline-dark"><?= e($home['before_after_intro']['button']) ?></a>
+            <a href="/realizacie" class="btn btn--outline-dark"><?= e($home['before_after_intro']['button']) ?></a>
         </div>
         <div class="before-after-grid">
             <?php foreach ($beforeAfter as $item): ?>
@@ -165,12 +165,12 @@ $reviews = $home['reviews'];
     <div class="container">
         <div class="slth-section-header slth-section-header--center"><p class="eyebrow"><?= e($home['process_intro']['eyebrow']) ?></p><h2><?= $home['process_intro']['title'] ?></h2><p><?= e($home['process_intro']['description']) ?></p></div>
         <div class="slth-process-grid"><?php foreach ($processSteps as $i => $step): ?><div class="slth-process-step reveal"><div class="slth-process-step__num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></div><h3><?= e($step['title']) ?></h3><p><?= e($step['desc']) ?></p></div><?php endforeach; ?></div>
-        <div class="slth-process__cta"><div><span>Ďalší krok</span><strong>Máte drevo, ktoré potrebuje nový začiatok?</strong></div><a href="kontakt.php" class="btn btn--gold">Nezáväzná konzultácia</a></div>
+        <div class="slth-process__cta"><div><span>Ďalší krok</span><strong>Máte drevo, ktoré potrebuje nový začiatok?</strong></div><a href="/kontakt" class="btn btn--gold">Nezáväzná konzultácia</a></div>
     </div>
 </section>
 
-<section class="slth-gallery-section" id="galeria"><div class="container"><div class="slth-gallery-intro"><div class="slth-section-header"><p class="eyebrow"><?= e($home['gallery_intro']['eyebrow']) ?></p><h2><?= $home['gallery_intro']['title'] ?></h2><p><?= e($home['gallery_intro']['description']) ?></p></div><a href="realizacie.php" class="btn btn--gold"><?= e($home['gallery_intro']['button']) ?></a></div><div class="slth-gallery-grid"><?php foreach ($home['gallery_preview'] as $image): ?><a href="realizacie.php" class="slth-gallery-item reveal"><img src="<?= e($image['src']) ?>" alt="<?= e($image['label']) ?>" loading="lazy"><span><?= e($image['label']) ?></span></a><?php endforeach; ?></div></div></section>
+<section class="slth-gallery-section" id="galeria"><div class="container"><div class="slth-gallery-intro"><div class="slth-section-header"><p class="eyebrow"><?= e($home['gallery_intro']['eyebrow']) ?></p><h2><?= $home['gallery_intro']['title'] ?></h2><p><?= e($home['gallery_intro']['description']) ?></p></div><a href="/realizacie" class="btn btn--gold"><?= e($home['gallery_intro']['button']) ?></a></div><div class="slth-gallery-grid"><?php foreach ($home['gallery_preview'] as $image): ?><a href="/realizacie" class="slth-gallery-item reveal"><img src="<?= e($image['src']) ?>" alt="<?= e($image['label']) ?>" loading="lazy"><span><?= e($image['label']) ?></span></a><?php endforeach; ?></div></div></section>
 
-<section class="slth-cta-section" style="--cta-image: url('<?= e($home['cta']['image']) ?>');"><div class="slth-cta-section__overlay"></div><div class="container slth-cta-section__inner"><h2><?= e($home['cta']['title']) ?></h2><p><?= e($home['cta']['description']) ?></p><div class="slth-cta-section__actions"><a href="kontakt.php" class="btn btn--gold btn--lg"><?= e($home['cta']['button']) ?></a></div></div></section>
+<section class="slth-cta-section" style="--cta-image: url('<?= e($home['cta']['image']) ?>');"><div class="slth-cta-section__overlay"></div><div class="container slth-cta-section__inner"><h2><?= e($home['cta']['title']) ?></h2><p><?= e($home['cta']['description']) ?></p><div class="slth-cta-section__actions"><a href="/kontakt" class="btn btn--gold btn--lg"><?= e($home['cta']['button']) ?></a></div></div></section>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
