@@ -3,6 +3,8 @@ AddDefaultCharset UTF-8
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteCond %{HTTP_HOST} ^(www\.)?targos\.sk(?::\d+)?$ [NC]
+    RewriteRule ^ https://garcia.sk%{REQUEST_URI} [L,R=301,NE]
     RewriteCond %{HTTPS} off
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1|.*\.test)(:\d+)?$

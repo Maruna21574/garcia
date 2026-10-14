@@ -5,7 +5,7 @@ declare(strict_types=1);
 const SITE_NAME = 'GARCIA';
 const SITE_TAGLINE = 'Povrchová úprava a renovácia dreva';
 const SITE_LOCATION = 'Liptovský Mikuláš a okolie';
-const SITE_URL = 'https://targos.sk';
+const SITE_URL = 'https://garcia.sk';
 
 const CONTACT_EMAIL = 'info@garcia.sk';
 const CONTACT_PHONE = '0905 938 699';
