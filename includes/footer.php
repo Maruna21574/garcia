@@ -79,6 +79,6 @@
     <button class="scroll-top" type="button" data-scroll-top aria-label="Späť na začiatok stránky" hidden>
         <span aria-hidden="true">↑</span>
     </button>
-    <script src="assets/js/main.js" defer></script>
+    <script src="/assets/js/main.js" defer></script>
 </body>
 </html>

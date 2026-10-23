@@ -1,8 +1,10 @@
 <?php
 
 require_once __DIR__ . '/includes/cms.php';
+require_once __DIR__ . '/includes/albums.php';
 $content = cms_data();
 $home = $content['home'];
+$galleryPreview = array_slice(array_values(array_filter(albums_all(), static fn (array $album): bool => $album['photos'] !== [])), 0, 4);
 $pageTitle = $content['seo']['home']['title'];
 $activePage = 'domov';
 $bodyClass = 'slth-layout home-page';
@@ -169,7 +171,7 @@ $reviews = $home['reviews'];
     </div>
 </section>
 
-<section class="slth-gallery-section" id="galeria"><div class="container"><div class="slth-gallery-intro"><div class="slth-section-header"><p class="eyebrow"><?= e($home['gallery_intro']['eyebrow']) ?></p><h2><?= $home['gallery_intro']['title'] ?></h2><p><?= e($home['gallery_intro']['description']) ?></p></div><a href="/realizacie" class="btn btn--gold"><?= e($home['gallery_intro']['button']) ?></a></div><div class="slth-gallery-grid"><?php foreach ($home['gallery_preview'] as $image): ?><a href="/realizacie" class="slth-gallery-item reveal"><img src="<?= e($image['src']) ?>" alt="<?= e($image['label']) ?>" loading="lazy"><span><?= e($image['label']) ?></span></a><?php endforeach; ?></div></div></section>
+<section class="slth-gallery-section" id="galeria"><div class="container"><div class="slth-gallery-intro"><div class="slth-section-header"><p class="eyebrow"><?= e($home['gallery_intro']['eyebrow']) ?></p><h2><?= $home['gallery_intro']['title'] ?></h2><p><?= e($home['gallery_intro']['description']) ?></p></div><a href="/realizacie" class="btn btn--gold"><?= e($home['gallery_intro']['button']) ?></a></div><div class="slth-gallery-grid"><?php foreach ($galleryPreview as $album): ?><a href="/realizacie" class="slth-gallery-item reveal"><img src="<?= e($album['photos'][0]) ?>" alt="<?= e($album['title']) ?>" loading="lazy"><span><?= e($album['title']) ?></span></a><?php endforeach; ?></div></div></section>
 
 <section class="slth-cta-section" style="--cta-image: url('<?= e($home['cta']['image']) ?>');"><div class="slth-cta-section__overlay"></div><div class="container slth-cta-section__inner"><h2><?= e($home['cta']['title']) ?></h2><p><?= e($home['cta']['description']) ?></p><div class="slth-cta-section__actions"><a href="/kontakt" class="btn btn--gold btn--lg"><?= e($home['cta']['button']) ?></a></div></div></section>
 

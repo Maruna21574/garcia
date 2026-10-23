@@ -49,8 +49,11 @@ $businessSchema = [
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?= e($metaDescription) ?>">
     <meta name="keywords" content="<?= e($seoKeywords) ?>">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="<?= e($canonicalUrl) ?>">
+    <meta name="robots" content="<?= !empty($noIndex) ? 'noindex, follow' : 'index, follow' ?>">
+<?php if (!empty($useBaseHref)): ?>    <base href="/">
+<?php endif; ?>
+<?php if (empty($noIndex)): ?>    <link rel="canonical" href="<?= e($canonicalUrl) ?>">
+<?php endif; ?>
     <meta property="og:type" content="website">
     <meta property="og:locale" content="sk_SK">
     <meta property="og:site_name" content="<?= e($cmsSite['name']) ?>">
@@ -75,7 +78,7 @@ $businessSchema = [
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css?v=<?= (int) filemtime(__DIR__ . '/../assets/css/style.css') ?>">
+    <link rel="stylesheet" href="/assets/css/style.css?v=<?= (int) filemtime(__DIR__ . '/../assets/css/style.css') ?>">
 </head>
 <body class="<?= e($bodyClass) ?>">
     <a href="#hlavny-obsah" class="skip-link">Preskočiť na obsah</a>

@@ -1,8 +1,9 @@
- <?php
+<?php
 
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/cms.php';
 require_once __DIR__ . '/includes/mail.php';
+require_once __DIR__ . '/includes/formguard.php';
 $content = cms_data();
 $contactPage = $content['contact_page'];
 $recipientEmail = trim((string) $content['site']['email']);
@@ -13,66 +14,73 @@ $formState = null;
 $old = ['name' => '', 'email' => '', 'phone' => '', 'message' => ''];
 $attachment = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $old['name'] = trim((string) ($_POST['name'] ?? ''));
-    $old['email'] = trim((string) ($_POST['email'] ?? ''));
-    $old['phone'] = trim((string) ($_POST['phone'] ?? ''));
-    $old['message'] = trim((string) ($_POST['message'] ?? ''));
+    $old['name'] = mb_substr(trim((string) ($_POST['name'] ?? '')), 0, 100);
+    $old['email'] = mb_substr(trim((string) ($_POST['email'] ?? '')), 0, 254);
+    $old['phone'] = mb_substr(trim((string) ($_POST['phone'] ?? '')), 0, 40);
+    $old['message'] = mb_substr(trim((string) ($_POST['message'] ?? '')), 0, 5000);
     $honeypot = trim((string) ($_POST['website'] ?? ''));
+    $tokenState = formguard_check_token((string) ($_POST['form_token'] ?? ''));
     $photo = $_FILES['photo'] ?? null;
     $uploadError = null;
+    $validFields = $old['name'] !== '' && filter_var($old['email'], FILTER_VALIDATE_EMAIL) && $old['message'] !== '' && !empty($_POST['consent']);
 
-    if (is_array($photo) && ($photo['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
-        $maxPhotoSize = 8 * 1024 * 1024;
-        $allowedMimes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
-        $photoError = (int) ($photo['error'] ?? UPLOAD_ERR_NO_FILE);
-        $photoSize = (int) ($photo['size'] ?? 0);
-        $photoMime = '';
-        if ($photoError === UPLOAD_ERR_OK && is_uploaded_file($photo['tmp_name'])) {
-            $fileInfo = new finfo(FILEINFO_MIME_TYPE);
-            $photoMime = (string) $fileInfo->file($photo['tmp_name']);
-        }
-
-        if ($photoError !== UPLOAD_ERR_OK || $photoSize > $maxPhotoSize || !isset($allowedMimes[$photoMime])) {
-            $uploadError = 'Fotografia musí byť JPG, PNG alebo WEBP do veľkosti 8 MB.';
-        } else {
-            $tempPath = tempnam(sys_get_temp_dir(), 'garcia_');
-            if ($tempPath === false || !move_uploaded_file($photo['tmp_name'], $tempPath)) {
-                $uploadError = 'Fotografiu sa nepodarilo načítať. Skúste to prosím znova.';
-            } else {
-                $originalName = basename((string) ($photo['name'] ?? 'fotografia'));
-                $safeName = preg_replace('/[^A-Za-z0-9._-]/', '-', $originalName) ?: ('fotografia.' . $allowedMimes[$photoMime]);
-                $attachment = ['path' => $tempPath, 'mime' => $photoMime, 'name' => $safeName];
-            }
-        }
-    }
-
-    if ($honeypot !== '') {
-        $formState = 'success';
-    } elseif ($uploadError !== null) {
-        $formState = 'upload-error';
-    } elseif ($old['name'] === '' || !filter_var($old['email'], FILTER_VALIDATE_EMAIL) || $old['message'] === '' || empty($_POST['consent'])) {
+    if ($honeypot !== '' || formguard_looks_like_spam($old['name'], $old['message'])) {
+        $formState = 'success'; // bots get no hint that they were filtered
+    } elseif ($tokenState === 'too-fast') {
+        $formState = 'too-fast';
+    } elseif ($tokenState !== 'ok') {
+        $formState = 'expired';
+    } elseif (!$validFields) {
         $formState = 'error';
     } elseif ($recipientEmail === '') {
         $formState = 'setup';
+    } elseif (!formguard_allow_submission()) {
+        $formState = 'rate-limit';
     } else {
-        $project = trim((string) ($_POST['project'] ?? ''));
+        if (is_array($photo) && ($photo['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+            $maxPhotoSize = 8 * 1024 * 1024;
+            $allowedMimes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+            $photoError = (int) ($photo['error'] ?? UPLOAD_ERR_NO_FILE);
+            $photoSize = (int) ($photo['size'] ?? 0);
+            $photoMime = '';
+            if ($photoError === UPLOAD_ERR_OK && is_uploaded_file($photo['tmp_name'])) {
+                $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+                $photoMime = (string) $fileInfo->file($photo['tmp_name']);
+            }
 
-        $inlineImage = $attachment ? mail_prepare_inline_image($attachment['path'], $attachment['mime']) : null;
-
-        $adminHtml = mail_admin_inquiry_html($old['name'], $old['email'], $old['phone'], $project, $old['message'], $inlineImage !== null);
-        $sent = mail_send_html($adminRecipientEmail, 'Nový dopyt z webu GARCIA', $senderEmail, 'GARCIA web', $old['email'], $adminHtml, $inlineImage);
-
-        if ($sent) {
-            $customerHtml = mail_customer_confirmation_html($old['name'], $content['site'], $inlineImage !== null);
-            mail_send_html($old['email'], 'Ďakujeme za váš dopyt — GARCIA', $senderEmail, (string) $content['site']['name'], $recipientEmail, $customerHtml, $inlineImage);
+            if ($photoError !== UPLOAD_ERR_OK || $photoSize > $maxPhotoSize || !isset($allowedMimes[$photoMime])) {
+                $uploadError = 'Fotografia musí byť JPG, PNG alebo WEBP do veľkosti 8 MB.';
+            } else {
+                $tempPath = tempnam(sys_get_temp_dir(), 'garcia_');
+                if ($tempPath === false || !move_uploaded_file($photo['tmp_name'], $tempPath)) {
+                    $uploadError = 'Fotografiu sa nepodarilo načítať. Skúste to prosím znova.';
+                } else {
+                    $attachment = ['path' => $tempPath, 'mime' => $photoMime];
+                }
+            }
         }
 
-        $formState = $sent ? 'success' : 'mail-error';
-        if ($sent) $old = ['name' => '', 'email' => '', 'phone' => '', 'message' => ''];
+        if ($uploadError !== null) {
+            $formState = 'upload-error';
+        } else {
+            $project = mb_substr(trim((string) ($_POST['project'] ?? '')), 0, 100);
+
+            $inlineImage = $attachment ? mail_prepare_inline_image($attachment['path'], $attachment['mime']) : null;
+
+            $adminHtml = mail_admin_inquiry_html($old['name'], $old['email'], $old['phone'], $project, $old['message'], $inlineImage !== null);
+            $sent = mail_send_html($adminRecipientEmail, 'Nový dopyt z webu GARCIA', $senderEmail, 'GARCIA web', $old['email'], $adminHtml, $inlineImage);
+
+            if ($sent && formguard_allow_confirmation($old['email'])) {
+                $customerHtml = mail_customer_confirmation_html($old['name'], $content['site'], $inlineImage !== null);
+                mail_send_html($old['email'], 'Ďakujeme za váš dopyt — GARCIA', $senderEmail, (string) $content['site']['name'], $recipientEmail, $customerHtml, $inlineImage);
+            }
+
+            $formState = $sent ? 'success' : 'mail-error';
+            if ($sent) $old = ['name' => '', 'email' => '', 'phone' => '', 'message' => ''];
+        }
     }
     if ($attachment && is_file($attachment['path'])) @unlink($attachment['path']);
 }
-
 $pageTitle = $content['seo']['contact']['title'];
 $activePage = 'kontakt';
 $bodyClass = 'inner-page contact-page';
@@ -108,13 +116,14 @@ require __DIR__ . '/includes/header.php';
             <p class="eyebrow"><?= e($contactPage['form']['eyebrow']) ?></p>
             <h2><?= e($contactPage['form']['title']) ?></h2>
             <p><?= e($contactPage['form']['description']) ?></p>
-            <?php if ($formState === 'success'): ?><div class="form-notice form-notice--success">Ďakujeme, správa bola odoslaná. Čoskoro sa vám ozveme.</div><?php elseif ($formState === 'error'): ?><div class="form-notice form-notice--error">Skontrolujte prosím meno, e-mail a správu.</div><?php elseif ($formState === 'upload-error'): ?><div class="form-notice form-notice--error">Fotografia musí byť JPG, PNG alebo WEBP do veľkosti 8 MB.</div><?php elseif ($formState === 'setup'): ?><div class="form-notice form-notice--setup">Formulár je pripravený. Pred nasadením ešte doplňte e-mail príjemcu v súbore <code>includes/config.php</code>.</div><?php elseif ($formState === 'mail-error'): ?><div class="form-notice form-notice--error">Správu sa nepodarilo odoslať. Skúste to prosím znova alebo neskôr.</div><?php endif; ?>
+            <?php if ($formState === 'success'): ?><div class="form-notice form-notice--success">Ďakujeme, správa bola odoslaná. Čoskoro sa vám ozveme.</div><?php elseif ($formState === 'error'): ?><div class="form-notice form-notice--error">Skontrolujte prosím meno, e-mail a správu.</div><?php elseif ($formState === 'upload-error'): ?><div class="form-notice form-notice--error">Fotografia musí byť JPG, PNG alebo WEBP do veľkosti 8 MB.</div><?php elseif ($formState === 'too-fast'): ?><div class="form-notice form-notice--error">Formulár ste odoslali príliš rýchlo. Počkajte prosím chvíľu a skúste to znova.</div><?php elseif ($formState === 'expired'): ?><div class="form-notice form-notice--error">Platnosť formulára vypršala. Skontrolujte údaje a odošlite ho znova.</div><?php elseif ($formState === 'rate-limit'): ?><div class="form-notice form-notice--error">Z tejto adresy bolo odoslaných príliš veľa správ. Skúste to neskôr alebo nám zavolajte.</div><?php elseif ($formState === 'setup'): ?><div class="form-notice form-notice--setup">Formulár je pripravený. Pred nasadením ešte doplňte e-mail príjemcu v súbore <code>includes/config.php</code>.</div><?php elseif ($formState === 'mail-error'): ?><div class="form-notice form-notice--error">Správu sa nepodarilo odoslať. Skúste to prosím znova alebo neskôr.</div><?php endif; ?>
             <form class="contact-form" method="post" action="/kontakt" enctype="multipart/form-data" data-contact-form>
                 <div class="form-row"><label for="name">Meno a priezvisko <span>*</span><input id="name" name="name" type="text" value="<?= e($old['name']) ?>" placeholder="Ako vás môžeme osloviť?" required></label><label for="email">E-mail <span>*</span><input id="email" name="email" type="email" value="<?= e($old['email']) ?>" placeholder="vas@email.sk" required></label></div>
                 <div class="form-row"><label for="phone">Telefón <small>nepovinné</small><input id="phone" name="phone" type="tel" value="<?= e($old['phone']) ?>" placeholder="+421 ..."></label><label for="project">Typ projektu <small>nepovinné</small><select id="project" name="project"><option value="">Vyberte možnosť</option><option>Chata alebo drevená stavba</option><option>Fasáda alebo obklad</option><option>Terasa alebo zábradlie</option><option>Okno alebo dvere</option><option>Iné</option></select></label></div>
                 <label for="message">Správa <span>*</span><textarea id="message" name="message" rows="5" placeholder="Stručne opíšte projekt, lokalitu a predstavu..." required><?= e($old['message']) ?></textarea></label>
                 <label class="form-file" for="photo"><?= e($contactPage['form']['photo_label']) ?> <small><?= e($contactPage['form']['photo_help']) ?></small><input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>
                 <label class="form-check"><input type="checkbox" name="consent" required><span>Súhlasím so spracovaním údajov na účely odpovede na dopyt. <a href="/ochrana-sukromia">Viac informácií</a>.</span></label>
+                <input type="hidden" name="form_token" value="<?= e(formguard_token()) ?>">
                 <input type="text" name="website" tabindex="-1" autocomplete="off" class="form-honeypot" aria-hidden="true">
                 <button class="button button--dark button--full" type="submit"><?= e($contactPage['form']['submit']) ?></button>
             </form>

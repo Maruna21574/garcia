@@ -58,7 +58,7 @@ function cms_defaults(): array
             ],
             'before_after_intro' => ['eyebrow' => 'Predtým / potom', 'title' => 'Rozdiel, ktorý <em>vidno.</em>', 'description' => 'Výber fotografií z obnovy drevených povrchov. Každý projekt má vlastný stav, materiál aj postup.', 'button' => 'Pozrieť všetky realizácie'],
             'before_after' => [
-                ['before' => 'assets/images/proces/chalupa-pred-obnovou.jpg', 'after' => 'assets/images/realizacie/chaty/zrubova-chata-final.jpg', 'title' => 'Zrubová chata', 'desc' => 'Zo zvetraného povrchu k chate, ktorá opäť pôsobí prirodzene a upravene.'],
+                ['before' => 'assets/images/albumy/gal_1/1.jpeg', 'after' => 'assets/images/albumy/gal_1/3.jpeg', 'title' => 'Renovácia dreveného vchodu', 'desc' => 'Od zbrúseného povrchu dverí po hotovú úpravu, ktorá vráti drevu čistý vzhľad.'],
                 ['before' => 'assets/images/proces/zabradlie-brusenie.jpg', 'after' => 'assets/images/realizacie/zabradlia/807888000_2175760010030185_5255659699515468658_n.jpg', 'title' => 'Drevené zábradlie', 'desc' => 'Detailná obnova schodov a zábradlia zvýrazní kresbu aj charakter dreva.'],
             ],
             'why_intro' => ['eyebrow' => 'Prečo si vybrať GARCIA', 'title' => 'Drevo oživíme. Jeho charakter <em>zachováme.</em>', 'description' => 'Spájame dôkladnú prípravu, správne ošetrenie a čistú remeselnú prácu — od prvého stretnutia až po posledný detail.'],
@@ -82,7 +82,7 @@ function cms_defaults(): array
                 ['title' => 'Čistý výsledok', 'text' => 'Záleží nám na príprave, detailoch aj na tom, ako po práci odovzdáme miesto.'],
                 ['title' => 'Starostlivosť ďalej', 'text' => 'Poradíme, ako ošetrený povrch udržať v dobrej kondícii aj počas ďalších sezón.'],
             ],
-            'reviews_intro' => ['eyebrow' => 'Referencie', 'title' => 'Spolupráca, na ktorú sa <em>nezabúda.</em>', 'description' => 'Ukážkové texty referencií sú pripravené na nahradenie skutočnými hodnoteniami po realizáciách.'],
+            'reviews_intro' => ['eyebrow' => 'Referencie', 'title' => 'Spolupráca, na ktorú sa <em>nezabúda.</em>', 'description' => 'Skúsenosti zákazníkov, ktorým sme obnovili drevo.'],
             'reviews' => [
                 ['quote' => 'Od prvej obhliadky bola dohoda jasná a výsledok predčil naše očakávania. Chata opäť pôsobí ako nová, pritom si zachovala svoj charakter.', 'name' => 'Jana K.', 'place' => 'Liptovský Mikuláš · obnova chaty'],
                 ['quote' => 'Oceňujeme čistú prácu, komunikáciu a to, že sme presne vedeli, čo sa bude diať. Drevený obklad dostal úplne nový život.', 'name' => 'Peter M.', 'place' => 'Demänovská Dolina · obnova obkladu'],
@@ -96,12 +96,6 @@ function cms_defaults(): array
                 ['title' => 'Odovzdanie a odporúčania', 'desc' => 'Čistý výsledok, informácie k údržbe a pokoj na ďalšie sezóny.'],
             ],
             'gallery_intro' => ['eyebrow' => 'Naša práca', 'title' => 'Galéria realizácií', 'description' => 'Výber z obnovy chát, drevených stavieb, terás, okien a detailov.', 'button' => 'Zobraziť celú galériu'],
-            'gallery_preview' => [
-                ['src' => 'assets/images/realizacie/Chata/814754130_4710092289220022_5544860182670447562_n.jpg', 'label' => 'Zrubová chata'],
-                ['src' => 'assets/images/realizacie/chaty/vstupna-terasa-final.jpg', 'label' => 'Vstupná terasa'],
-                ['src' => 'assets/images/realizacie/okna/strese-okno-final.jpg', 'label' => 'Renovácia okna'],
-                ['src' => 'assets/images/proces/obklad-brusenie-detail.jpg', 'label' => 'Brúsenie povrchu'],
-            ],
             'cta' => ['title' => 'Chcete, aby vaše drevo opäť vyniklo?', 'description' => 'Napíšte nám a pripravíme vám nezáväzné odporúčanie podľa vášho projektu.', 'button' => 'Kontaktovať GARCIA', 'image' => 'assets/images/realizacie/chaty/zrub-front-detail.jpg'],
         ],
         'services_page' => [
@@ -142,27 +136,6 @@ function cms_defaults(): array
         'gallery_page' => [
             'hero' => ['image' => 'assets/images/realizacie/chaty/terasa-detail-final.jpg', 'video' => 'assets/media/proces-renovacie.mp4', 'title' => 'Výsledok, ktorý <em>vidno aj cítiť.</em>', 'description' => 'Výber z obnovy drevených chát, stavieb, terás, okien a detailov v našich rukách.'],
             'intro' => ['eyebrow' => 'Galéria GARCIA', 'title' => 'Drevo po našom.', 'description' => 'Každá realizácia je trochu iná. Spája ich príprava, detail a rešpekt k pôvodnému materiálu.'],
-            'filters' => ['Všetko', 'Chaty a stavby', 'Okná a dvere', 'V procese'],
-            'items' => [
-                ['file' => 'realizacie/Chata/814754130_4710092289220022_5544860182670447562_n.jpg', 'title' => 'Zrubová chata — celkový pohľad', 'label' => 'dokončená obnova', 'category' => 'chaty'],
-                ['file' => 'realizacie/Chata/793899922_26329356466761965_5538160186085151006_n.jpg', 'title' => 'Zrubová chata — detail', 'label' => 'obnovená fasáda', 'category' => 'chaty'],
-                ['file' => 'realizacie/Chata/808855148_1498381105433182_7386706436728506203_n.jpg', 'title' => 'Zrubová chata — proces', 'label' => 'renovácia v procese', 'category' => 'proces'],
-                ['file' => 'realizacie/chaty/zrubova-chata-final.jpg', 'title' => 'Zrubová chata', 'label' => 'hotový výsledok', 'category' => 'chaty'],
-                ['file' => 'realizacie/chaty/terasa-zabradlie-final.jpg', 'title' => 'Terasa a zábradlie', 'label' => 'obnovený povrch', 'category' => 'chaty'],
-                ['file' => 'realizacie/okna/strese-okno-final.jpg', 'title' => 'Strešné okno', 'label' => 'renovácia okna', 'category' => 'okna'],
-                ['file' => 'realizacie/chaty/vstupna-terasa-final.jpg', 'title' => 'Vstupná terasa', 'label' => 'finálna úprava', 'category' => 'chaty'],
-                ['file' => 'realizacie/chaty/obklad-stavba-final.jpg', 'title' => 'Drevený obklad', 'label' => 'obnova fasády', 'category' => 'chaty'],
-                ['file' => 'realizacie/okna/dvere-final.jpg', 'title' => 'Drevené dvere', 'label' => 'ošetrenie a ochrana', 'category' => 'okna'],
-                ['file' => 'realizacie/chaty/obklad-roh-detail.jpg', 'title' => 'Roh fasády', 'label' => 'zachovaný charakter', 'category' => 'chaty'],
-                ['file' => 'realizacie/okna/okno-detail-final.jpg', 'title' => 'Okno — detail', 'label' => 'čistý detail', 'category' => 'okna'],
-                ['file' => 'proces/terasa-renovacia.jpg', 'title' => 'Terasa v procese', 'label' => 'brúsenie a príprava', 'category' => 'proces'],
-                ['file' => 'proces/zrub-brusenie.jpg', 'title' => 'Brúsenie zrubu', 'label' => 'obnova v procese', 'category' => 'proces'],
-                ['file' => 'realizacie/chaty/zabradlie-final.jpg', 'title' => 'Zábradlie', 'label' => 'obnovená kresba', 'category' => 'chaty'],
-                ['file' => 'realizacie/okna/interierove-okno.jpg', 'title' => 'Interiérové okno', 'label' => 'obnova dreva', 'category' => 'okna'],
-                ['file' => 'proces/okno-nater.jpg', 'title' => 'Nanášanie ochrany', 'label' => 'finálna úprava', 'category' => 'proces'],
-                ['file' => 'realizacie/chaty/obklad-cela-stavba.jpg', 'title' => 'Fasáda celej stavby', 'label' => 'drevená stavba', 'category' => 'chaty'],
-                ['file' => 'proces/zabradlie-polovica.jpg', 'title' => 'Zábradlie — pred a po', 'label' => 'viditeľná zmena', 'category' => 'proces'],
-            ],
         ],
         'project_page' => ['hero' => ['image' => 'assets/images/realizacie/chaty/terasa-zabradlie-final.jpg', 'title' => 'Keď sa starostlivosť <em>oplatí.</em>', 'description' => 'Obnova terasy, zábradlia a drevených prvkov na chate v Liptove — s cieľom zachovať charakter a vrátiť povrchu život.'], 'about' => ['image' => 'assets/images/realizacie/chaty/terasa-zabradlie-final.jpg', 'eyebrow' => 'O projekte', 'title' => 'Nie všetko staré treba <em>vymeniť.</em>', 'paragraphs' => ['Na drevenej chate sme obnovovali prvky, ktoré boli vystavené slnku, dažďu a rokmi stratili svoju ochrannú vrstvu. Cieľom nebolo prekryť ich charakter, ale vrátiť mu sýtosť a pokoj.', 'Prešli sme jednotlivé časti stavby, pripravili povrch a zvolili ošetrenie podľa jeho namáhania.'], 'facts' => [['label' => 'Rozsah', 'value' => 'Terasa a zábradlie'], ['label' => 'Postup', 'value' => 'Brúsenie + ošetrenie'], ['label' => 'Lokalita', 'value' => 'Liptov a okolie']]], 'gallery' => ['eyebrow' => 'Z priebehu práce', 'title' => 'Detail, ktorý rozhoduje.', 'description' => 'Príprava povrchu je rovnako dôležitá ako finálna vrstva. Práve v detailoch vzniká rozdiel, ktorý vydrží.', 'items' => [['src' => 'assets/images/realizacie/chaty/terasa-detail-final.jpg', 'alt' => 'Detail drevenej terasy po renovácii', 'label' => 'Detail terasy'], ['src' => 'assets/images/realizacie/chaty/vstupna-terasa-final.jpg', 'alt' => 'Vstupná terasa po ošetrení', 'label' => 'Vstupná terasa'], ['src' => 'assets/images/realizacie/chaty/terasa-praca-svetlo.jpg', 'alt' => 'Renovácia terasy počas práce', 'label' => 'Práca na mieste'], ['src' => 'assets/images/realizacie/chaty/zabradlie-detail-final.jpg', 'alt' => 'Detail zábradlia po renovácii', 'label' => 'Obnovená kresba']]], 'process' => ['eyebrow' => 'Náš postup', 'title' => 'Najskôr sme nechali drevo <em>porozprávať.</em>', 'description' => 'Obhliadka, brúsenie, čistenie a vhodné ošetrenie. Výsledok je živý, nie umelý — presne ako drevo má byť.', 'steps' => [['title' => 'Posúdenie stavu', 'desc' => 'Prešli sme jednotlivé časti stavby a očakávania majiteľa.'], ['title' => 'Brúsenie a čistenie', 'desc' => 'Odstránili sme zvetrané a nerovnomerne stmavnuté vrstvy.'], ['title' => 'Nová ochrana', 'desc' => 'Povrchy dostali rovnomernú úpravu pre ďalšie sezóny.'], ['title' => 'Čistý výsledok', 'desc' => 'Kresba dreva zostala viditeľná a stavba opäť pôsobí pokojne.']]]],
         'about_page' => ['hero' => ['image' => 'assets/images/realizacie/chaty/zrubova-chata-final.jpg', 'video' => 'assets/media/proces-renovacie.mp4', 'title' => 'Drevo nie je len materiál. <em>Je to príbeh.</em>', 'description' => 'Našou prácou mu pomáhame pokračovať — s rešpektom k jeho kresbe, charakteru a času, ktorý v ňom zostal.'], 'about' => ['image' => 'assets/images/realizacie/chaty/zrub-front-detail.jpg', 'eyebrow' => 'GARCIA / drevo s príbehom', 'title' => 'Vrátiť drevu krásu je viac než ho <em>len natrieť.</em>', 'paragraphs' => ['Každý povrch reaguje inak. Niektorý potrebuje citlivé brúsenie, iný dôkladné očistenie, ďalší novú ochranu pred dažďom a slnkom. Naše rozhodnutia vychádzajú zo stavu dreva, nie z univerzálnej šablóny.', 'Pracujeme v Liptovskom Mikuláši a okolí. Na projektoch nám záleží od prvej obhliadky až po posledný detail a odporúčanie k údržbe.']], 'values' => ['eyebrow' => 'Na čom si zakladáme', 'title' => 'Jednoduché hodnoty. <em>Poctivý výsledok.</em>', 'description' => 'Dobrá renovácia stojí na pozornosti, otvorenej dohode a práci, ktorá rešpektuje materiál.', 'items' => [['number' => '01', 'title' => 'Rešpekt k materiálu', 'text' => 'Drevo neprekresľujeme podľa trendu. Hľadáme spôsob, ako ukázať jeho vlastnú krásu.'], ['number' => '02', 'title' => 'Čistá práca', 'text' => 'Dbáme na prípravu, poriadok na mieste a výsledok, ktorý funguje aj prakticky.'], ['number' => '03', 'title' => 'Otvorená komunikácia', 'text' => 'Vysvetlíme možnosti, limity aj ďalšiu údržbu bez zbytočných sľubov.'], ['number' => '04', 'title' => 'Lokálny prístup', 'text' => 'Sme nablízku. Vďaka tomu vieme prísť, pozrieť sa a navrhnúť riešenie na mieru.'], ['number' => '05', 'title' => 'Trpezlivý detail', 'text' => 'Pri dreve sa ponáhľať neoplatí. Každá vrstva a detail ovplyvňujú výsledok.'], ['number' => '06', 'title' => 'Dlhšia životnosť', 'text' => 'Cieľom nie je iba pekný deň odovzdania, ale drevo pripravené na ďalšie sezóny.']]], 'process' => ['eyebrow' => 'Prečo renovovať', 'title' => 'Staré drevo má často najviac <em>charakteru.</em>', 'description' => 'Renovácia predlžuje životnosť, šetrí materiál a zachováva atmosféru, ktorú nová povrchová úprava často iba napodobňuje.', 'steps' => [['title' => 'Zachováte príbeh', 'desc' => 'Kresba, patina a proporcie zostanú súčasťou stavby.'], ['title' => 'Predĺžite život', 'desc' => 'Ošetrené drevo lepšie zvláda slnko, dážď aj zmeny počasia.'], ['title' => 'Ušetríte materiál', 'desc' => 'To, čo sa dá obnoviť, nemusí hneď končiť výmenou.'], ['title' => 'Vrátite mu krásu', 'desc' => 'Čistý povrch nechá prirodzené drevo opäť vyniknúť.']]]],
@@ -170,7 +143,7 @@ function cms_defaults(): array
         'legal' => [
             'hero' => ['image' => 'assets/images/realizacie/chaty/obklad-roh-detail.jpg', 'eyebrow' => 'GARCIA / informácie', 'title' => 'Ochrana <em>súkromia.</em>', 'description' => 'Transparentne vysvetľujeme, aké údaje spracúvame, prečo ich potrebujeme a aké máte práva.'],
             'updated' => 'Platné od 18. 9. 2026',
-            'operator' => ['heading' => '1. Prevádzkovateľ', 'text' => 'Prevádzkovateľom tejto webovej stránky je GARCIA – povrchová úprava a renovácia dreva, pôsobiaca v lokalite Liptovský Mikuláš a okolie.', 'name_label' => 'Názov', 'scope_label' => 'Pôsobnosť', 'contact_label' => 'Kontakt', 'id_label' => 'Identifikačné údaje', 'identification' => 'Doplniť IČO a adresu pred zverejnením webu'],
+            'operator' => ['heading' => '1. Prevádzkovateľ', 'text' => 'Prevádzkovateľom tejto webovej stránky je GARCIA – povrchová úprava a renovácia dreva, pôsobiaca v lokalite Liptovský Mikuláš a okolie.', 'name_label' => 'Názov', 'scope_label' => 'Pôsobnosť', 'contact_label' => 'Kontakt'],
             'sections' => [
                 ['heading' => '2. Aké údaje spracúvame', 'body' => 'Pri odoslaní kontaktného formulára spracúvame iba údaje, ktoré nám sami poskytnete: meno a priezvisko, e-mail a prípadne telefónne číslo, typ projektu a obsah správy, fotografie projektu, ak ich dobrovoľne priložíte k dopytu. Údaje nepoužívame na automatizované rozhodovanie ani na profilovanie. Nepredávame ich a neposkytujeme ich na reklamné účely.'],
                 ['heading' => '3. Účel a právny základ spracúvania', 'body' => 'Údaje používame na odpoveď na váš dopyt, prípravu konzultácie, obhliadky alebo cenovej ponuky a na dohodu ďalšieho postupu. Právnym základom je vykonanie opatrení pred uzatvorením zmluvy podľa čl. 6 ods. 1 písm. b) GDPR.'],
@@ -180,8 +153,6 @@ function cms_defaults(): array
                 ['heading' => '7. Cookies a podobné technológie', 'body' => 'Táto webová stránka momentálne nepoužíva reklamné, analytické ani marketingové cookies tretích strán. Používa iba lokálne technické úložisko na zapamätanie vašej voľby v cookie lište.'],
                 ['heading' => '8. Bezpečnosť a zmeny', 'body' => 'Prijímame primerané technické a organizačné opatrenia na ochranu odoslaných údajov. Toto znenie môžeme aktualizovať, ak sa zmení spôsob fungovania webu, používané služby alebo právne požiadavky.'],
             ],
-            'note_heading' => 'Dôležité pred spustením webu',
-            'note_text' => 'Doplňte ešte skutočné identifikačné údaje prevádzkovateľa, adresu a IČO. Tento text je pripravený ako webový základ a pred ostrým nasadením ho odporúčame skontrolovať podľa vašej konkrétnej situácie.',
         ],
         'project_gallery' => [['src' => 'assets/images/realizacie/chaty/terasa-detail-final.jpg', 'alt' => 'Detail drevenej terasy po renovácii', 'label' => 'Detail terasy'], ['src' => 'assets/images/realizacie/chaty/vstupna-terasa-final.jpg', 'alt' => 'Vstupná terasa po ošetrení', 'label' => 'Vstupná terasa'], ['src' => 'assets/images/realizacie/chaty/terasa-praca-svetlo.jpg', 'alt' => 'Renovácia terasy počas práce', 'label' => 'Práca na mieste'], ['src' => 'assets/images/realizacie/chaty/zabradlie-detail-final.jpg', 'alt' => 'Detail zábradlia po renovácii', 'label' => 'Obnovená kresba']],
         'footer' => ['description' => 'Dávame drevu nový život.', 'quick_links_title' => 'Rýchle odkazy', 'services_title' => 'Služby', 'contact_title' => 'Kontakt', 'privacy_label' => 'Ochrana súkromia', 'cookies_label' => 'Nastavenia cookies'],
@@ -242,6 +213,7 @@ function cms_data(): array
         $stored = json_decode((string) file_get_contents(CMS_STORAGE_FILE), true);
         if (is_array($stored)) $defaults = cms_merge($defaults, $stored);
     }
+    unset($defaults['gallery_page']['items'], $defaults['gallery_page']['filters'], $defaults['home']['gallery_preview']);
     $content = cms_normalize_links($defaults);
     return $content;
 }

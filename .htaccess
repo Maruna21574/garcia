@@ -1,4 +1,5 @@
 Options -Indexes
+ErrorDocument 404 /404.php
 AddDefaultCharset UTF-8
 
 <IfModule mod_rewrite.c>
@@ -34,14 +35,24 @@ AddDefaultCharset UTF-8
     RewriteRule ^kontakt/?$ kontakt.php [END,QSA]
     RewriteRule ^realizacia-chata/?$ realizacia-chata.php [END,QSA]
     RewriteRule ^ochrana-sukromia/?$ ochrana-sukromia.php [END,QSA]
+
+    # Serve the pre-generated WebP twin (photo.jpg -> photo.jpg.webp) to browsers that accept it.
+    RewriteCond %{HTTP_ACCEPT} image/webp
+    RewriteCond %{REQUEST_FILENAME}.webp -f
+    RewriteRule ^(assets/.+\.jpe?g)$ $1.webp [T=image/webp,L]
 </IfModule>
 
 <IfModule mod_headers.c>
+    <FilesMatch "\.(jpe?g|webp)$">
+        Header merge Vary Accept
+    </FilesMatch>
     Header set X-Content-Type-Options "nosniff"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>
+
+AddType image/webp .webp
 
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/xhtml+xml application/javascript text/javascript application/json image/svg+xml

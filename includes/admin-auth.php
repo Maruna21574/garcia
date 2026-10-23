@@ -42,7 +42,7 @@ function admin_is_logged_in(): bool
 
 function admin_client_key(): string
 {
-    return hash('sha256', (string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown'));
+    return hash('sha256', client_ip());
 }
 
 function admin_login_attempts(): array

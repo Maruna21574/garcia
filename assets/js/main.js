@@ -241,6 +241,13 @@ document.addEventListener('DOMContentLoaded', () => {
         galleryItems.forEach((item) => {
             item.addEventListener('click', (event) => { event.preventDefault(); openLightbox(item); });
         });
+        document.querySelectorAll('[data-album-open]').forEach((card) => {
+            card.addEventListener('click', (event) => {
+                event.preventDefault();
+                galleryItems.forEach((item) => item.classList.toggle('is-hidden', item.dataset.album !== card.dataset.albumOpen));
+                openLightbox(visibleGalleryItems()[0]);
+            });
+        });
         lightboxPrevious?.addEventListener('click', () => moveLightbox(-1));
         lightboxNext?.addEventListener('click', () => moveLightbox(1));
         lightboxClose.forEach((button) => button.addEventListener('click', closeLightbox));
@@ -252,6 +259,18 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.key === 'Escape') closeLightbox();
             if (lightbox.classList.contains('is-open') && event.key === 'ArrowLeft') moveLightbox(-1);
             if (lightbox.classList.contains('is-open') && event.key === 'ArrowRight') moveLightbox(1);
+        });
+    }
+
+    // Hero videos are decoration: skip them on data-saver connections and for reduced-motion users (poster stays).
+    const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (saveData || reduceMotion) {
+        document.querySelectorAll('.slth-hero__video, .slth-page-hero__video').forEach((video) => {
+            video.removeAttribute('autoplay');
+            video.pause();
+            video.querySelectorAll('source').forEach((source) => source.remove());
+            video.load();
         });
     }
 

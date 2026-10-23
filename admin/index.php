@@ -5,6 +5,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/cms.php';
 require_once __DIR__ . '/../includes/admin-auth.php';
+require_once __DIR__ . '/../includes/albums.php';
 
 admin_start_session();
 $config = admin_config();
@@ -98,7 +99,7 @@ function admin_media_files(): array
         if (!is_dir($directory)) continue;
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS));
         foreach ($iterator as $file) {
-            if (!$file->isFile() || !preg_match('/\.(?:jpe?g|png|webp|gif|svg)$/i', $file->getFilename())) continue;
+            if (!$file->isFile() || !preg_match('/\.(?:jpe?g|png|webp|gif|svg)$/i', $file->getFilename()) || preg_match('/\.(?:jpe?g|png)\.webp$/i', $file->getFilename())) continue;
             $relative = str_replace('\\', '/', substr($file->getPathname(), strlen($directory) + 1));
             $files[] = $publicRoot . '/' . $relative;
         }
@@ -148,6 +149,10 @@ if ($config && admin_is_logged_in() && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!is_array($posted)) $posted = [];
         if (cms_save(cms_merge(cms_defaults(), $posted))) $message = 'Obsah bol uložený.';
         else $error = 'Obsah sa nepodarilo uložiť.';
+    } elseif (str_starts_with($action, 'album_')) {
+        [$albumMessage, $albumError] = albums_handle_action($action, $_POST, $_FILES);
+        $message = $albumMessage;
+        $error = $albumError;
     } elseif ($action === 'upload') {
         $file = $_FILES['media'] ?? null;
         $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', 'image/gif' => 'gif', 'image/svg+xml' => 'svg'];
@@ -177,7 +182,7 @@ $content = cms_data();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>GARCIA CMS</title>
-    <link rel="stylesheet" href="../assets/css/admin.css?v=2">
+    <link rel="stylesheet" href="../assets/css/admin.css?v=3">
 </head>
 <body class="admin-body">
 <main class="admin-shell">
@@ -190,6 +195,25 @@ $content = cms_data();
         <section class="admin-card admin-auth"><span class="admin-kicker">Privátna zóna</span><h2>Prihlásenie</h2><p>Upravujte texty, obrázky, služby, realizácie aj SEO nastavenia webu.</p><form method="post"><input type="hidden" name="action" value="login"><input type="hidden" name="csrf" value="<?= admin_h($token) ?>"><label>Heslo<input type="password" name="password" required autofocus autocomplete="current-password"></label><button class="admin-button" type="submit">Prihlásiť sa</button></form></section>
     <?php else: ?>
         <section class="admin-card admin-toolbar"><div><span class="admin-kicker">Obsah a médiá</span><h2>Upravte web bez zásahu do kódu</h2><p>Texty s označením <code>&lt;em&gt;</code> podporujú zvýraznenie kurzívou. Pri obrázkoch použite cestu z knižnice médií.</p></div><div class="admin-toolbar__actions"><a class="admin-button admin-button--muted" href="../" target="_blank" rel="noopener">Zobraziť web</a><button class="admin-button" form="content-form" type="submit">Uložiť všetko</button></div></section>
+        <section class="admin-card" id="albumy"><span class="admin-kicker">Realizácie</span><h2>Albumy fotografií</h2><p>Každý album sa zobrazí na stránke Realizácie ako jedna dlaždica. Prvá fotka je titulná. Fotky sa po nahraní zmenšia a upravia automaticky.</p>
+            <form class="admin-album admin-album--new" method="post" enctype="multipart/form-data"><input type="hidden" name="action" value="album_create"><input type="hidden" name="csrf" value="<?= admin_h($token) ?>">
+                <h3>Pridať nový album</h3>
+                <label class="admin-field"><span>Názov albumu</span><input type="text" name="title" required maxlength="120" placeholder="napr. Zrubová chata — Demänovská dolina"></label>
+                <label class="admin-field"><span>Krátky popis (nepovinné)</span><input type="text" name="description" maxlength="120" placeholder="napr. brúsenie a ochrana"></label>
+                <label class="admin-field"><span>Fotografie (JPG, PNG, WEBP do 12 MB, môžete vybrať viac naraz)</span><input type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" multiple required></label>
+                <button class="admin-button" type="submit">Vytvoriť album</button>
+            </form>
+            <?php $albumList = albums_all(); foreach ($albumList as $albumIndex => $album): ?>
+                <form class="admin-album" method="post" enctype="multipart/form-data"><input type="hidden" name="csrf" value="<?= admin_h($token) ?>"><input type="hidden" name="album_id" value="<?= admin_h($album['id']) ?>">
+                    <div class="admin-album__head"><h3><?= admin_h($album['title']) ?> <small><?= count($album['photos']) ?> fotiek</small></h3>
+                        <div class="admin-album__order"><button class="admin-button admin-button--muted" type="submit" name="action" value="album_move" formnovalidate onclick="this.form.direction.value='up'" <?= $albumIndex === 0 ? 'disabled' : '' ?> aria-label="Posunúť vyššie">↑</button><button class="admin-button admin-button--muted" type="submit" name="action" value="album_move" formnovalidate onclick="this.form.direction.value='down'" <?= $albumIndex === count($albumList) - 1 ? 'disabled' : '' ?> aria-label="Posunúť nižšie">↓</button><input type="hidden" name="direction" value=""></div></div>
+                    <div class="admin-album__fields"><label class="admin-field"><span>Názov</span><input type="text" name="title" value="<?= admin_h($album['title']) ?>" required maxlength="120"></label><label class="admin-field"><span>Popis</span><input type="text" name="description" value="<?= admin_h($album['description']) ?>" maxlength="120"></label></div>
+                    <div class="admin-album__photos"><?php foreach ($album['photos'] as $photoIndex => $photo): ?><figure><img src="../<?= admin_h($photo) ?>" alt="" loading="lazy"><figcaption><label><input type="radio" name="cover" value="<?= admin_h($photo) ?>" <?= $photoIndex === 0 ? 'checked' : '' ?>> titulná</label><label><input type="checkbox" name="remove[]" value="<?= admin_h($photo) ?>"> zmazať</label></figcaption></figure><?php endforeach; ?></div>
+                    <label class="admin-field"><span>Pridať ďalšie fotografie</span><input type="file" name="photos[]" accept="image/jpeg,image/png,image/webp" multiple></label>
+                    <div class="admin-album__actions"><button class="admin-button" type="submit" name="action" value="album_update">Uložiť album</button><button class="admin-button admin-button--danger" type="submit" name="action" value="album_delete" formnovalidate onclick="return confirm('Naozaj odstrániť celý album?')">Odstrániť album</button></div>
+                </form>
+            <?php endforeach; ?>
+        </section>
         <section class="admin-card"><span class="admin-kicker">Knižnica médií</span><h2>Nahrať nový obrázok</h2><form class="admin-upload" method="post" enctype="multipart/form-data"><input type="hidden" name="action" value="upload"><input type="hidden" name="csrf" value="<?= admin_h($token) ?>"><input type="file" name="media" accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml" required><button class="admin-button admin-button--dark" type="submit">Nahrať obrázok</button></form><?php if (admin_media_files()): ?><div class="admin-media-grid"><?php foreach (admin_media_files() as $media): ?><figure><img src="../<?= admin_h($media) ?>" alt=""><figcaption><code><?= admin_h($media) ?></code></figcaption></figure><?php endforeach; ?></div><?php endif; ?></section>
         <form id="content-form" class="admin-editor" method="post"><input type="hidden" name="action" value="save"><input type="hidden" name="csrf" value="<?= admin_h($token) ?>">
             <div class="admin-editor-layout">

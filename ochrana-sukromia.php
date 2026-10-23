@@ -29,7 +29,6 @@ require __DIR__ . '/includes/header.php';
             <div><span><?= e($legal['operator']['name_label']) ?></span><strong><?= e($content['site']['name'] . ' – ' . $content['site']['tagline']) ?></strong></div>
             <div><span><?= e($legal['operator']['scope_label']) ?></span><strong><?= e($content['site']['location']) ?></strong></div>
             <div><span><?= e($legal['operator']['contact_label']) ?></span><strong><a href="mailto:<?= e($content['site']['email']) ?>"><?= e($content['site']['email']) ?></a> · <a href="tel:<?= e(preg_replace('/\s+/', '', $content['site']['phone'])) ?>"><?= e($content['site']['phone']) ?></a></strong></div>
-            <div><span><?= e($legal['operator']['id_label']) ?></span><strong><?= e($legal['operator']['identification']) ?></strong></div>
         </div>
 
         <?php foreach ($legal['sections'] as $sectionIndex => $section): ?>
@@ -47,8 +46,6 @@ require __DIR__ . '/includes/header.php';
         <button class="button button--dark legal-cookie-button" type="button" data-cookie-open>Otvoriť nastavenia cookies</button>
             <?php endif; ?>
         <?php endforeach; ?>
-
-        <div class="legal-note"><strong><?= e($legal['note_heading']) ?></strong><span><?= e($legal['note_text']) ?></span></div>
     </div>
 </section>
 <?php require __DIR__ . '/includes/footer.php'; ?>

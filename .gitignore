@@ -19,6 +19,7 @@ sass-cache/
 
 # CMS data and client uploads (kept on the hosting server)
 /storage/*.json
+/storage/*.txt
 !/storage/.gitkeep
 /storage/sessions/
 /assets/uploads/*

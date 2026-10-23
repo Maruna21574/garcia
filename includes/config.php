@@ -59,3 +59,21 @@ function service_icon(string $name): string
 
     return $icons[$name] ?? $icons['custom'];
 }
+
+/**
+ * Visitor IP. Behind a reverse proxy REMOTE_ADDR is the proxy, so forwarded headers are only
+ * trusted when the direct peer is a private/loopback address.
+ */
+function client_ip(): string
+{
+    $remote = (string) ($_SERVER['REMOTE_ADDR'] ?? '');
+    $isPublic = filter_var($remote, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false;
+    if ($remote !== '' && $isPublic) return $remote;
+    foreach (['HTTP_X_FORWARDED_FOR', 'HTTP_X_REAL_IP'] as $header) {
+        foreach (explode(',', (string) ($_SERVER[$header] ?? '')) as $candidate) {
+            $candidate = trim($candidate);
+            if (filter_var($candidate, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) return $candidate;
+        }
+    }
+    return $remote !== '' ? $remote : 'unknown';
+}

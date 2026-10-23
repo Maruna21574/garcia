@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/includes/cms.php';
+require_once __DIR__ . '/includes/albums.php';
 $content = cms_data();
 $galleryPage = $content['gallery_page'];
 $pageTitle = $content['seo']['gallery']['title'];
@@ -8,27 +9,7 @@ $activePage = 'realizacie';
 $bodyClass = 'inner-page gallery-page';
 $metaDescription = $content['seo']['gallery']['description'];
 $seoKeywords = $content['seo']['gallery']['keywords'];
-$gallery = [
-    ['file' => 'realizacie/Chata/814754130_4710092289220022_5544860182670447562_n.jpg', 'title' => 'Zrubová chata — celkový pohľad', 'label' => 'dokončená obnova', 'category' => 'chaty'],
-    ['file' => 'realizacie/Chata/793899922_26329356466761965_5538160186085151006_n.jpg', 'title' => 'Zrubová chata — detail', 'label' => 'obnovená fasáda', 'category' => 'chaty'],
-    ['file' => 'realizacie/Chata/808855148_1498381105433182_7386706436728506203_n.jpg', 'title' => 'Zrubová chata — proces', 'label' => 'renovácia v procese', 'category' => 'proces'],
-    ['file' => 'realizacie/chaty/zrubova-chata-final.jpg', 'title' => 'Zrubová chata', 'label' => 'hotový výsledok', 'category' => 'chaty'],
-    ['file' => 'realizacie/chaty/terasa-zabradlie-final.jpg', 'title' => 'Terasa a zábradlie', 'label' => 'obnovený povrch', 'category' => 'chaty'],
-    ['file' => 'realizacie/okna/strese-okno-final.jpg', 'title' => 'Strešné okno', 'label' => 'renovácia okna', 'category' => 'okna'],
-    ['file' => 'realizacie/chaty/vstupna-terasa-final.jpg', 'title' => 'Vstupná terasa', 'label' => 'finálna úprava', 'category' => 'chaty'],
-    ['file' => 'realizacie/chaty/obklad-stavba-final.jpg', 'title' => 'Drevený obklad', 'label' => 'obnova fasády', 'category' => 'chaty'],
-    ['file' => 'realizacie/okna/dvere-final.jpg', 'title' => 'Drevené dvere', 'label' => 'ošetrenie a ochrana', 'category' => 'okna'],
-    ['file' => 'realizacie/chaty/obklad-roh-detail.jpg', 'title' => 'Roh fasády', 'label' => 'zachovaný charakter', 'category' => 'chaty'],
-    ['file' => 'realizacie/okna/okno-detail-final.jpg', 'title' => 'Okno — detail', 'label' => 'čistý detail', 'category' => 'okna'],
-    ['file' => 'proces/terasa-renovacia.jpg', 'title' => 'Terasa v procese', 'label' => 'brúsenie a príprava', 'category' => 'proces'],
-    ['file' => 'proces/zrub-brusenie.jpg', 'title' => 'Brúsenie zrubu', 'label' => 'obnova v procese', 'category' => 'proces'],
-    ['file' => 'realizacie/chaty/zabradlie-final.jpg', 'title' => 'Zábradlie', 'label' => 'obnovená kresba', 'category' => 'chaty'],
-    ['file' => 'realizacie/okna/interierove-okno.jpg', 'title' => 'Interiérové okno', 'label' => 'obnova dreva', 'category' => 'okna'],
-    ['file' => 'proces/okno-nater.jpg', 'title' => 'Nanášanie ochrany', 'label' => 'finálna úprava', 'category' => 'proces'],
-    ['file' => 'realizacie/chaty/obklad-cela-stavba.jpg', 'title' => 'Fasáda celej stavby', 'label' => 'drevená stavba', 'category' => 'chaty'],
-    ['file' => 'proces/zabradlie-polovica.jpg', 'title' => 'Zábradlie — pred a po', 'label' => 'viditeľná zmena', 'category' => 'proces'],
-];
-$gallery = $galleryPage['items'];
+$albums = array_values(array_filter(albums_all(), static fn (array $album): bool => $album['photos'] !== []));
 require __DIR__ . '/includes/header.php';
 ?>
 
@@ -45,14 +26,17 @@ require __DIR__ . '/includes/header.php';
 
 <section class="slth-gallery-section">
     <div class="container">
-        <div class="slth-gallery-heading"><div class="slth-section-header"><p class="eyebrow"><?= e($galleryPage['intro']['eyebrow']) ?></p><h2><?= $galleryPage['intro']['title'] ?></h2><p><?= e($galleryPage['intro']['description']) ?></p></div><div class="gallery-toolbar" role="group" aria-label="Filtrovať realizácie"><?php foreach ($galleryPage['filters'] as $filterIndex => $filter): $filterKeys = ['all', 'chaty', 'okna', 'proces']; $filterKey = $filterKeys[$filterIndex] ?? 'all'; ?><button class="filter-button<?= $filterIndex === 0 ? ' is-active' : '' ?>" type="button" data-filter="<?= e($filterKey) ?>"><?= e($filter) ?></button><?php endforeach; ?></div></div>
+        <div class="slth-gallery-heading"><div class="slth-section-header"><p class="eyebrow"><?= e($galleryPage['intro']['eyebrow']) ?></p><h2><?= $galleryPage['intro']['title'] ?></h2><p><?= e($galleryPage['intro']['description']) ?></p></div></div>
         <div class="slth-gallery-full-grid">
-            <?php foreach ($gallery as $item): $src = 'assets/images/' . $item['file']; ?>
-                <a href="<?= e($src) ?>" class="slth-gallery-card reveal" data-gallery-item data-category="<?= e($item['category']) ?>" data-lightbox data-title="<?= e($item['title']) ?>" data-label="<?= e($item['label']) ?>">
-                    <img src="<?= e($src) ?>" alt="<?= e($item['title']) ?> — <?= e($item['label']) ?>" loading="lazy"><span class="slth-gallery-card__shade"></span><span class="slth-gallery-card__text"><small><?= e($item['label']) ?></small><strong><?= e($item['title']) ?></strong></span>
+            <?php foreach ($albums as $album): $count = count($album['photos']); $label = $album['description'] !== '' ? $album['description'] : 'realizácia'; ?>
+                <a href="<?= e($album['photos'][0]) ?>" class="slth-gallery-card album-card reveal" data-album-open="<?= e($album['id']) ?>">
+                    <img src="<?= e($album['photos'][0]) ?>" alt="<?= e($album['title']) ?>" loading="lazy"><span class="slth-gallery-card__shade"></span><span class="album-card__count"><?= $count ?> <?= $count === 1 ? 'fotka' : ($count < 5 ? 'fotky' : 'fotiek') ?></span><span class="slth-gallery-card__text"><small><?= e($label) ?></small><strong><?= e($album['title']) ?></strong></span>
                 </a>
             <?php endforeach; ?>
         </div>
+        <?php foreach ($albums as $album): $label = $album['description'] !== '' ? $album['description'] : 'realizácia'; foreach ($album['photos'] as $photo): ?>
+            <a href="<?= e($photo) ?>" class="album-photo is-hidden" data-gallery-item data-album="<?= e($album['id']) ?>" data-title="<?= e($album['title']) ?>" data-label="<?= e($label) ?>" tabindex="-1" aria-hidden="true"></a>
+        <?php endforeach; endforeach; ?>
     </div>
 </section>
 
